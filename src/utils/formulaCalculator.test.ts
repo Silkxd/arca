@@ -1,5 +1,5 @@
 // Test file for formula calculator functionality
-import { calculateFormula } from '../stores/planningStore';
+import { usePlanningStore } from '../store/planningStore';
 
 // Test cases for formula validation
 const testCases = [
@@ -27,6 +27,9 @@ const testCases = [
 
 // Run tests
 console.log('🧮 Testing Formula Calculator...\n');
+
+// Get the calculateFormula function from the store
+const { calculateFormula } = usePlanningStore.getState();
 
 testCases.forEach((testCase, index) => {
   try {

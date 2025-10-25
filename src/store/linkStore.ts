@@ -2,6 +2,9 @@ import { create } from 'zustand';
 import { supabase } from '../lib/supabase';
 import { Link, LinkGroup, LinkFormData, LinkGroupFormData } from '../types';
 
+// Export types for use in other components
+export type { Link, LinkGroup };
+
 interface LinkStore {
   // State
   links: Link[];

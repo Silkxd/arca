@@ -65,6 +65,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
     // Add to categories list temporarily
     categories.push({
       id: Date.now().toString(),
+      user_id: '', // This will be set by the backend
       name: newCategory.name,
       type: formData.type as 'income' | 'expense' | 'both',
       color: newCategory.color,

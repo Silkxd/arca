@@ -540,7 +540,7 @@ export const PJFinancialControl: React.FC = () => {
             <DollarSign className="w-8 h-8 text-blue-600" />
             <div>
               <p className="text-sm font-medium text-blue-700 dark:text-blue-300">Saldo</p>
-              <p className="text-xl font-bold text-blue-600">{formatCurrency(monthlyStats.balance)}</p>
+              <p className="text-xl font-bold text-blue-600">{formatCurrency(monthlyStats.saldo)}</p>
             </div>
           </div>
         </div>
