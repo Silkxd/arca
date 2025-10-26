@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { AlertCircle, RefreshCw } from 'lucide-react';
-import { FocoNavigation } from '../components/layout/FocoNavigation';
 import { useFoco } from '../contexts/FocoContext';
 import { useLocation } from 'react-router-dom';
 
@@ -67,9 +66,6 @@ export const Foco: React.FC = () => {
         {/* O iframe agora é renderizado pelo FocoProvider e apenas controlamos sua visibilidade */}
         <div className="w-full h-full" />
       </div>
-      
-      {/* Foco Navigation with minimize functionality */}
-      <FocoNavigation />
     </div>
   );
 };

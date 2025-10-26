@@ -5,6 +5,8 @@ import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
 import { Lock, Mail, Eye, EyeOff } from 'lucide-react'
+import ArcaLogo from '../assets/Arca_logo.svg'
+import ArcaBackground from '../assets/arca-background.png'
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState('')
@@ -33,14 +35,27 @@ export const Login: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <div 
+      className="min-h-screen flex items-center justify-center p-4 relative"
+      style={{
+        backgroundImage: `url(${ArcaBackground})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Overlay semi-transparente para melhorar a legibilidade */}
+      <div className="absolute inset-0 bg-black/30"></div>
+      
+      <div className="w-full max-w-md relative z-10">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-2xl mb-4">
-            <Lock className="w-8 h-8 text-primary-foreground" />
-          </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Arca</h1>
-          <p className="text-muted-foreground">Vida Digital e Financeira</p>
+          <img 
+            src={ArcaLogo} 
+            alt="Arca Logo" 
+            className="w-16 h-16 object-contain mb-4 mx-auto"
+          />
+          <h1 className="text-3xl font-bold text-white mb-2">Bem-vindo ao Arca</h1>
+          <p className="text-white/80">Ecossistema completo</p>
         </div>
 
         <Card>
