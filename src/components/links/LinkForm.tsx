@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { X, ExternalLink, Globe } from 'lucide-react';
 import { Link, LinkGroup, LinkFormData } from '../../types';
 
@@ -9,6 +9,49 @@ interface LinkFormProps {
   onClose: () => void;
   loading?: boolean;
 }
+
+// Constantes para limites
+const MAX_URL_LENGTH = 2000;
+const MAX_TITLE_LENGTH = 200;
+const MAX_DESCRIPTION_LENGTH = 500;
+
+// Função de validação de URL mais simples e eficiente
+const isValidUrl = (url: string): boolean => {
+  try {
+    // Limitar o tamanho da URL para evitar problemas de performance
+    if (url.length > MAX_URL_LENGTH) {
+      return false;
+    }
+
+    // Adicionar protocolo se não existir
+    const testUrl = url.startsWith('http') ? url : `https://${url}`;
+    
+    // Usar URL constructor que é mais eficiente que regex complexa
+    const urlObj = new URL(testUrl);
+    
+    // Verificar se tem um hostname válido
+    return urlObj.hostname.length > 0 && urlObj.hostname.includes('.');
+  } catch {
+    return false;
+  }
+};
+
+// Hook para debounce
+const useDebounce = (value: string, delay: number) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+};
 
 export const LinkForm: React.FC<LinkFormProps> = ({
   link,
@@ -25,6 +68,9 @@ export const LinkForm: React.FC<LinkFormProps> = ({
   });
 
   const [errors, setErrors] = useState<Partial<LinkFormData>>({});
+  
+  // Debounce da URL para validação
+  const debouncedUrl = useDebounce(formData.url, 300);
 
   useEffect(() => {
     if (link) {
@@ -39,31 +85,53 @@ export const LinkForm: React.FC<LinkFormProps> = ({
     }
   }, [link, groups]);
 
-  const validateForm = (): boolean => {
+  const validateForm = useCallback((): boolean => {
     const newErrors: Partial<LinkFormData> = {};
 
-    if (!formData.title.trim()) {
-      newErrors.title = 'Título é obrigatório';
-    }
+    try {
+      // Validação do título
+      if (!formData.title.trim()) {
+        newErrors.title = 'Título é obrigatório';
+      } else if (formData.title.length > MAX_TITLE_LENGTH) {
+        newErrors.title = `Título deve ter no máximo ${MAX_TITLE_LENGTH} caracteres`;
+      }
 
-    if (!formData.url.trim()) {
-      newErrors.url = 'URL é obrigatória';
-    } else {
-      // Basic URL validation
-      const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
-      const testUrl = formData.url.startsWith('http') ? formData.url : `https://${formData.url}`;
-      if (!urlPattern.test(testUrl)) {
+      // Validação da URL
+      if (!formData.url.trim()) {
+        newErrors.url = 'URL é obrigatória';
+      } else if (formData.url.length > MAX_URL_LENGTH) {
+        newErrors.url = `URL deve ter no máximo ${MAX_URL_LENGTH} caracteres`;
+      } else if (!isValidUrl(formData.url)) {
         newErrors.url = 'URL inválida';
       }
-    }
 
-    if (!formData.group_id) {
-      newErrors.group_id = 'Grupo é obrigatório';
+      // Validação da descrição
+      if (formData.description && formData.description.length > MAX_DESCRIPTION_LENGTH) {
+        newErrors.description = `Descrição deve ter no máximo ${MAX_DESCRIPTION_LENGTH} caracteres`;
+      }
+
+      // Validação do grupo
+      if (!formData.group_id) {
+        newErrors.group_id = 'Grupo é obrigatório';
+      }
+    } catch (error) {
+      console.error('Erro na validação:', error);
+      newErrors.url = 'Erro na validação da URL';
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
+  }, [formData]);
+
+  // Validação com debounce apenas para URL
+  useEffect(() => {
+    if (debouncedUrl && debouncedUrl !== formData.url) {
+      // Limpar erro de URL se existir
+      if (errors.url) {
+        setErrors(prev => ({ ...prev, url: undefined }));
+      }
+    }
+  }, [debouncedUrl, formData.url, errors.url]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,7 +146,24 @@ export const LinkForm: React.FC<LinkFormProps> = ({
   };
 
   const handleChange = (field: keyof LinkFormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    // Aplicar limites de caracteres durante a digitação
+    let limitedValue = value;
+    
+    switch (field) {
+      case 'title':
+        limitedValue = value.slice(0, MAX_TITLE_LENGTH);
+        break;
+      case 'url':
+        limitedValue = value.slice(0, MAX_URL_LENGTH);
+        break;
+      case 'description':
+        limitedValue = value.slice(0, MAX_DESCRIPTION_LENGTH);
+        break;
+    }
+
+    setFormData(prev => ({ ...prev, [field]: limitedValue }));
+    
+    // Limpar erro do campo se existir
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: undefined }));
     }
@@ -86,8 +171,12 @@ export const LinkForm: React.FC<LinkFormProps> = ({
 
   const testUrl = () => {
     if (formData.url) {
-      const url = formData.url.startsWith('http') ? formData.url : `https://${formData.url}`;
-      window.open(url, '_blank');
+      try {
+        const url = formData.url.startsWith('http') ? formData.url : `https://${formData.url}`;
+        window.open(url, '_blank');
+      } catch (error) {
+        console.error('Erro ao abrir URL:', error);
+      }
     }
   };
 
@@ -97,9 +186,18 @@ export const LinkForm: React.FC<LinkFormProps> = ({
 
   const selectedGroup = getSelectedGroup();
 
+  // Função para truncar URL longa no preview
+  const truncateUrl = (url: string, maxLength: number = 50) => {
+    if (url.length <= maxLength) return url;
+    return url.slice(0, maxLength) + '...';
+  };
+
+  // Verificar se deve mostrar preview (evitar com URLs muito longas)
+  const shouldShowPreview = formData.title && formData.url && formData.url.length <= 500;
+
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white">
@@ -117,7 +215,7 @@ export const LinkForm: React.FC<LinkFormProps> = ({
           {/* Title */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Título *
+              Título * ({formData.title.length}/{MAX_TITLE_LENGTH})
             </label>
             <input
               type="text"
@@ -140,7 +238,7 @@ export const LinkForm: React.FC<LinkFormProps> = ({
           {/* URL */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              URL *
+              URL * ({formData.url.length}/{MAX_URL_LENGTH})
             </label>
             <div className="relative">
               <input
@@ -209,7 +307,7 @@ export const LinkForm: React.FC<LinkFormProps> = ({
           {/* Description */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Descrição
+              Descrição ({formData.description.length}/{MAX_DESCRIPTION_LENGTH})
             </label>
             <textarea
               value={formData.description}
@@ -218,10 +316,15 @@ export const LinkForm: React.FC<LinkFormProps> = ({
               rows={3}
               className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors resize-none"
             />
+            {errors.description && (
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                {errors.description}
+              </p>
+            )}
           </div>
 
-          {/* Preview */}
-          {formData.title && formData.url && (
+          {/* Preview - Otimizado para URLs longas */}
+          {shouldShowPreview && (
             <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
               <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Pré-visualização:
@@ -234,11 +337,20 @@ export const LinkForm: React.FC<LinkFormProps> = ({
                   <p className="font-medium text-gray-900 dark:text-white truncate">
                     {formData.title}
                   </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
-                    {formData.url}
+                  <p className="text-sm text-gray-500 dark:text-gray-400 truncate" title={formData.url}>
+                    {truncateUrl(formData.url)}
                   </p>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* Aviso para URLs muito longas */}
+          {formData.url.length > 500 && (
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-3">
+              <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                ⚠️ URL muito longa. Preview desabilitado para melhor performance.
+              </p>
             </div>
           )}
 

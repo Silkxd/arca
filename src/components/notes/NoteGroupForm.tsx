@@ -2,6 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { X, Folder } from 'lucide-react';
 import { NoteGroup, NoteGroupFormData } from '../../store/notesStore';
 
+const colorOptions = [
+  { name: 'Azul', value: 'blue', bg: 'bg-blue-500', text: 'text-blue-600' },
+  { name: 'Verde', value: 'green', bg: 'bg-green-500', text: 'text-green-600' },
+  { name: 'Roxo', value: 'purple', bg: 'bg-purple-500', text: 'text-purple-600' },
+  { name: 'Rosa', value: 'pink', bg: 'bg-pink-500', text: 'text-pink-600' },
+  { name: 'Amarelo', value: 'yellow', bg: 'bg-yellow-500', text: 'text-yellow-600' },
+  { name: 'Vermelho', value: 'red', bg: 'bg-red-500', text: 'text-red-600' },
+  { name: 'Índigo', value: 'indigo', bg: 'bg-indigo-500', text: 'text-indigo-600' },
+  { name: 'Cinza', value: 'gray', bg: 'bg-gray-500', text: 'text-gray-600' }
+];
+
 interface NoteGroupFormProps {
   group?: NoteGroup;
   onSubmit: (data: NoteGroupFormData) => void;
@@ -16,13 +27,15 @@ export const NoteGroupForm: React.FC<NoteGroupFormProps> = ({
   loading
 }) => {
   const [formData, setFormData] = useState<NoteGroupFormData>({
-    name: ''
+    name: '',
+    color: 'blue'
   });
 
   useEffect(() => {
     if (group) {
       setFormData({
-        name: group.name
+        name: group.name,
+        color: group.color || 'blue'
       });
     }
   }, [group]);
@@ -70,6 +83,32 @@ export const NoteGroupForm: React.FC<NoteGroupFormProps> = ({
               required
               autoFocus
             />
+          </div>
+
+          {/* Color Selection */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+              Cor do Grupo
+            </label>
+            <div className="grid grid-cols-4 gap-3">
+              {colorOptions.map(color => (
+                <button
+                  key={color.value}
+                  type="button"
+                  onClick={() => setFormData({ ...formData, color: color.value })}
+                  className={`flex flex-col items-center gap-2 p-3 rounded-xl border-2 transition-all ${
+                    formData.color === color.value
+                      ? 'border-gray-400 dark:border-gray-500 bg-gray-50 dark:bg-gray-700'
+                      : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500'
+                  }`}
+                >
+                  <div className={`w-6 h-6 rounded-full ${color.bg}`} />
+                  <span className="text-xs text-gray-600 dark:text-gray-400">
+                    {color.name}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Actions */}

@@ -153,11 +153,6 @@ export const LinkGroupCard: React.FC<LinkGroupCardProps> = ({
                     <p className="font-medium text-gray-900 dark:text-white truncate">
                       {link.title}
                     </p>
-                    {link.description && (
-                      <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
-                        {link.description}
-                      </p>
-                    )}
                   </div>
                 </button>
 
