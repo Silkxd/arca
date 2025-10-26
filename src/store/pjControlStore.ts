@@ -15,6 +15,14 @@ export interface PJFinancialRecord {
   updated_at: string;
 }
 
+export interface PJResponsible {
+  id: string;
+  user_id: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface PJRecordFormData {
   type: 'receita' | 'retirada';
   amount: number;
@@ -33,6 +41,7 @@ export interface BillingCalculation {
 
 interface PJControlStore {
   records: PJFinancialRecord[];
+  responsibles: PJResponsible[];
   loading: boolean;
   error: string | null;
   selectedMonth: string;
@@ -40,6 +49,8 @@ interface PJControlStore {
   // Actions
   setSelectedMonth: (month: string) => void;
   fetchRecords: () => Promise<void>;
+  fetchResponsibles: () => Promise<void>;
+  addResponsible: (name: string) => Promise<PJResponsible>;
   addRecord: (data: PJRecordFormData) => Promise<void>;
   updateRecord: (id: string, data: Partial<PJRecordFormData>) => Promise<void>;
   deleteRecord: (id: string) => Promise<void>;
@@ -56,6 +67,7 @@ interface PJControlStore {
 
 export const usePJControlStore = create<PJControlStore>((set, get) => ({
   records: [],
+  responsibles: [],
   loading: false,
   error: null,
   selectedMonth: new Date().toISOString().slice(0, 7), // YYYY-MM format
@@ -76,6 +88,60 @@ export const usePJControlStore = create<PJControlStore>((set, get) => ({
       set({ error: (error as Error).message });
     } finally {
       set({ loading: false });
+    }
+  },
+
+  fetchResponsibles: async () => {
+    try {
+      const { data, error } = await supabase
+        .from('pj_responsibles')
+        .select('*')
+        .order('name', { ascending: true });
+
+      if (error) throw error;
+      set({ responsibles: data || [] });
+    } catch (error) {
+      console.error('Error fetching responsibles:', error);
+      set({ error: (error as Error).message });
+    }
+  },
+
+  addResponsible: async (name: string) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('User not authenticated');
+
+      const { data, error } = await supabase
+        .from('pj_responsibles')
+        .insert([{ name, user_id: user.id }])
+        .select()
+        .single();
+
+      if (error) {
+        // If it's a unique constraint violation, just fetch and return existing
+        if (error.code === '23505') {
+          const { data: existing, error: fetchError } = await supabase
+            .from('pj_responsibles')
+            .select('*')
+            .eq('name', name)
+            .eq('user_id', user.id)
+            .single();
+          
+          if (fetchError) throw fetchError;
+          return existing;
+        }
+        throw error;
+      }
+
+      // Update the store with the new responsible
+      set(state => ({
+        responsibles: [...state.responsibles, data].sort((a, b) => a.name.localeCompare(b.name))
+      }));
+
+      return data;
+    } catch (error) {
+      console.error('Error adding responsible:', error);
+      throw error;
     }
   },
 

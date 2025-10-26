@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Calculator, DollarSign, FileText, Building2, TrendingUp, TrendingDown } from 'lucide-react';
+import { Plus, Edit2, Trash2, Calculator, DollarSign, FileText, Building2, TrendingUp, TrendingDown, ChevronDown } from 'lucide-react';
 import { usePJControlStore, PJRecordFormData, PJFinancialRecord, BillingCalculation } from '../../store/pjControlStore';
 import { ConfirmationModal } from '../ui/ConfirmationModal';
 import { PJSummaryModal } from '../ui/PJSummaryModal';
@@ -13,6 +13,7 @@ interface RecordFormProps {
 }
 
 const RecordForm: React.FC<RecordFormProps> = ({ record, onSubmit, onCancel }) => {
+  const { responsibles, fetchResponsibles, addResponsible } = usePJControlStore();
   const [formData, setFormData] = useState<PJRecordFormData>({
     type: record?.type || 'receita',
     amount: record?.amount || 0,
@@ -20,10 +21,48 @@ const RecordForm: React.FC<RecordFormProps> = ({ record, onSubmit, onCancel }) =
     responsible: record?.responsible || '',
     month_year: record?.month_year || new Date().toISOString().slice(0, 7)
   });
+  const [showResponsibleDropdown, setShowResponsibleDropdown] = useState(false);
+  const [responsibleInput, setResponsibleInput] = useState(record?.responsible || '');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    fetchResponsibles();
+  }, [fetchResponsibles]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+      if (!target.closest('.relative')) {
+        setShowResponsibleDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    
+    // If responsible is new, add it to the database
+    if (responsibleInput && !responsibles.find(r => r.name === responsibleInput)) {
+      try {
+        await addResponsible(responsibleInput);
+      } catch (error) {
+        console.error('Error adding responsible:', error);
+      }
+    }
+    
+    onSubmit({ ...formData, responsible: responsibleInput });
+  };
+
+  const filteredResponsibles = responsibles.filter(r => 
+    r.name.toLowerCase().includes(responsibleInput.toLowerCase())
+  );
+
+  const handleResponsibleSelect = (name: string) => {
+    setResponsibleInput(name);
+    setFormData({ ...formData, responsible: name });
+    setShowResponsibleDropdown(false);
   };
 
   return (
@@ -77,18 +116,57 @@ const RecordForm: React.FC<RecordFormProps> = ({ record, onSubmit, onCancel }) =
             />
           </div>
 
-          <div>
+          <div className="relative">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Responsável
             </label>
-            <input
-              type="text"
-              value={formData.responsible}
-              onChange={(e) => setFormData({ ...formData, responsible: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              placeholder="Nome do responsável"
-              required
-            />
+            <div className="relative">
+              <input
+                type="text"
+                value={responsibleInput}
+                onChange={(e) => {
+                  setResponsibleInput(e.target.value);
+                  setFormData({ ...formData, responsible: e.target.value });
+                  setShowResponsibleDropdown(true);
+                }}
+                onFocus={() => setShowResponsibleDropdown(true)}
+                className="w-full px-3 py-2 pr-10 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                placeholder="Digite ou selecione um responsável"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowResponsibleDropdown(!showResponsibleDropdown)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              >
+                <ChevronDown className="w-4 h-4" />
+              </button>
+              
+              {showResponsibleDropdown && (
+                <div className="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl shadow-lg max-h-48 overflow-y-auto">
+                  {filteredResponsibles.length > 0 ? (
+                    filteredResponsibles.map((responsible) => (
+                      <button
+                        key={responsible.id}
+                        type="button"
+                        onClick={() => handleResponsibleSelect(responsible.name)}
+                        className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-900 dark:text-white first:rounded-t-xl last:rounded-b-xl"
+                      >
+                        {responsible.name}
+                      </button>
+                    ))
+                  ) : responsibleInput ? (
+                    <div className="px-3 py-2 text-gray-500 dark:text-gray-400 text-sm">
+                      Pressione Enter para adicionar "{responsibleInput}"
+                    </div>
+                  ) : (
+                    <div className="px-3 py-2 text-gray-500 dark:text-gray-400 text-sm">
+                      Nenhum responsável encontrado
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
 
           <div>
@@ -600,7 +678,7 @@ export const PJFinancialControl: React.FC = () => {
                       {record.type === 'receita' ? 'Receita' : 'Retirada'}
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-gray-900 dark:text-white">
+                  <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
                     {record.description}
                   </td>
                   <td className="px-6 py-4 text-right font-medium text-gray-900 dark:text-white">
