@@ -1,4 +1,5 @@
 # Arca - Gerenciador de Vida Pessoal
+
 ## Documento de Arquitetura Técnica
 
 ## 1. Architecture design
@@ -22,37 +23,43 @@ graph TD
 
 ## 2. Technology Description
 
-- **Frontend**: React@18 + TypeScript + Tailwind CSS@3 + Vite + React Router
-- **Backend**: Supabase (Authentication, Database, Storage)
-- **State Management**: Zustand para gerenciamento de estado global
-- **Criptografia**: crypto-js para criptografia local de senhas
-- **UI Components**: Radix UI + Lucide React para ícones
-- **Charts**: Recharts para gráficos financeiros
+* **Frontend**: React\@18 + TypeScript + Tailwind CSS\@3 + Vite + React Router
+
+* **Backend**: Supabase (Authentication, Database, Storage)
+
+* **State Management**: Zustand para gerenciamento de estado global
+
+* **Criptografia**: crypto-js para criptografia local de senhas
+
+* **UI Components**: Radix UI + Lucide React para ícones
+
+* **Charts**: Recharts para gráficos financeiros
 
 ## 3. Route definitions
 
-| Route | Purpose |
-|-------|---------|
-| / | Página inicial - redireciona para /dashboard se autenticado, senão para /login |
-| /login | Página de login e registro de usuários |
-| /dashboard | Dashboard principal com visão geral dos módulos |
-| /passwords | Cofre de senhas - listagem e gerenciamento de credenciais |
-| /passwords/add | Formulário para adicionar nova senha |
-| /passwords/edit/:id | Formulário para editar senha existente |
-| /finances | Módulo de finanças - visão geral e transações |
-| /finances/add | Formulário para adicionar nova transação |
-| /finances/reports | Relatórios e gráficos financeiros |
-| /finances/categories | Gerenciamento de categorias financeiras |
-| /links | Gerenciamento de links - visão de grupos |
-| /links/group/:id | Visualização de links dentro de um grupo específico |
-| /links/add | Formulário para adicionar novo link |
-| /settings | Configurações do aplicativo e preferências do usuário |
+| Route                | Purpose                                                                        |
+| -------------------- | ------------------------------------------------------------------------------ |
+| /                    | Página inicial - redireciona para /dashboard se autenticado, senão para /login |
+| /login               | Página de login e registro de usuários                                         |
+| /dashboard           | Dashboard principal com visão geral dos módulos                                |
+| /passwords           | Cofre de senhas - listagem e gerenciamento de credenciais                      |
+| /passwords/add       | Formulário para adicionar nova senha                                           |
+| /passwords/edit/:id  | Formulário para editar senha existente                                         |
+| /finances            | Módulo de finanças - visão geral e transações                                  |
+| /finances/add        | Formulário para adicionar nova transação                                       |
+| /finances/reports    | Relatórios e gráficos financeiros                                              |
+| /finances/categories | Gerenciamento de categorias financeiras                                        |
+| /links               | Gerenciamento de links - visão de grupos                                       |
+| /links/group/:id     | Visualização de links dentro de um grupo específico                            |
+| /links/add           | Formulário para adicionar novo link                                            |
+| /settings            | Configurações do aplicativo e preferências do usuário                          |
 
 ## 4. API definitions
 
 ### 4.1 Core API
 
 **Autenticação de Usuário**
+
 ```
 POST /auth/v1/signup
 POST /auth/v1/token
@@ -60,6 +67,7 @@ POST /auth/v1/logout
 ```
 
 **Gerenciamento de Senhas**
+
 ```
 GET /rest/v1/passwords
 POST /rest/v1/passwords
@@ -68,16 +76,18 @@ DELETE /rest/v1/passwords?id=eq.{id}
 ```
 
 Request (Adicionar Senha):
-| Param Name | Param Type | isRequired | Description |
-|------------|------------|------------|-------------|
-| title | string | true | Nome/título da credencial |
-| username | string | true | Nome de usuário ou email |
-| password | string | true | Senha criptografada |
-| url | string | false | URL do site/serviço |
-| category | string | false | Categoria da senha |
-| notes | string | false | Notas adicionais |
+
+| Param Name | Param Type | isRequired | Description               |
+| ---------- | ---------- | ---------- | ------------------------- |
+| title      | string     | true       | Nome/título da credencial |
+| username   | string     | true       | Nome de usuário ou email  |
+| password   | string     | true       | Senha criptografada       |
+| url        | string     | false      | URL do site/serviço       |
+| category   | string     | false      | Categoria da senha        |
+| notes      | string     | false      | Notas adicionais          |
 
 **Gerenciamento Financeiro**
+
 ```
 GET /rest/v1/transactions
 POST /rest/v1/transactions
@@ -86,15 +96,17 @@ DELETE /rest/v1/transactions?id=eq.{id}
 ```
 
 Request (Adicionar Transação):
-| Param Name | Param Type | isRequired | Description |
-|------------|------------|------------|-------------|
-| type | string | true | Tipo: 'income' ou 'expense' |
-| amount | number | true | Valor da transação |
-| description | string | true | Descrição da transação |
-| category | string | true | Categoria da transação |
-| date | string | true | Data da transação (ISO format) |
+
+| Param Name  | Param Type | isRequired | Description                    |
+| ----------- | ---------- | ---------- | ------------------------------ |
+| type        | string     | true       | Tipo: 'income' ou 'expense'    |
+| amount      | number     | true       | Valor da transação             |
+| description | string     | true       | Descrição da transação         |
+| category    | string     | true       | Categoria da transação         |
+| date        | string     | true       | Data da transação (ISO format) |
 
 **Gerenciamento de Links**
+
 ```
 GET /rest/v1/link_groups
 POST /rest/v1/link_groups
@@ -103,11 +115,12 @@ POST /rest/v1/links
 ```
 
 Request (Adicionar Grupo de Links):
-| Param Name | Param Type | isRequired | Description |
-|------------|------------|------------|-------------|
-| name | string | true | Nome do grupo |
-| description | string | false | Descrição do grupo |
-| color | string | false | Cor do grupo (hex) |
+
+| Param Name  | Param Type | isRequired | Description        |
+| ----------- | ---------- | ---------- | ------------------ |
+| name        | string     | true       | Nome do grupo      |
+| description | string     | false      | Descrição do grupo |
+| color       | string     | false      | Cor do grupo (hex) |
 
 ## 5. Server architecture diagram
 
@@ -209,6 +222,7 @@ erDiagram
 ### 6.2 Data Definition Language
 
 **Tabela de Usuários (gerenciada pelo Supabase Auth)**
+
 ```sql
 -- A tabela auth.users é gerenciada automaticamente pelo Supabase
 -- Criamos uma tabela de perfil para dados adicionais
@@ -227,6 +241,7 @@ CREATE POLICY "Users can update own profile" ON profiles FOR UPDATE USING (auth.
 ```
 
 **Tabela de Senhas**
+
 ```sql
 CREATE TABLE passwords (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -251,6 +266,7 @@ CREATE POLICY "Users can manage own passwords" ON passwords FOR ALL USING (auth.
 ```
 
 **Tabela de Transações Financeiras**
+
 ```sql
 CREATE TABLE transactions (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -274,6 +290,7 @@ CREATE POLICY "Users can manage own transactions" ON transactions FOR ALL USING 
 ```
 
 **Tabela de Grupos de Links**
+
 ```sql
 CREATE TABLE link_groups (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -293,6 +310,7 @@ CREATE POLICY "Users can manage own link groups" ON link_groups FOR ALL USING (a
 ```
 
 **Tabela de Links**
+
 ```sql
 CREATE TABLE links (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -315,6 +333,7 @@ USING (group_id IN (SELECT id FROM link_groups WHERE user_id = auth.uid()));
 ```
 
 **Tabela de Categorias**
+
 ```sql
 CREATE TABLE categories (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -342,3 +361,4 @@ INSERT INTO categories (user_id, name, type, color) VALUES
 (auth.uid(), 'Salário', 'income', '#10B981'),
 (auth.uid(), 'Freelance', 'income', '#06B6D4');
 ```
+
