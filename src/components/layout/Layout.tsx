@@ -1,6 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
-import { BottomNavigation } from './BottomNavigation'
+import { CompactNavigation } from './CompactNavigation'
+import { FocoNavigation } from './FocoNavigation'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -15,7 +16,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       <main className="pb-20">
         {children}
       </main>
-      <BottomNavigation />
+      {isFocoPage ? <FocoNavigation /> : <CompactNavigation />}
     </div>
   )
 }

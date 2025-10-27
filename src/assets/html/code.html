@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gerenciamento de Notas</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#16A34A",
+            "background-light": "#FFFFFF",
+            "background-dark": "#18181B",
+            "surface-light": "#F8FAFC",
+            "surface-dark": "#27272A",
+            "text-primary-light": "#18181B",
+            "text-primary-dark": "#FAFAFA",
+            "text-secondary-light": "#64748B",
+            "text-secondary-dark": "#A1A1AA",
+            "border-light": "#E2E8F0",
+            "border-dark": "#3F3F46",
+          },
+          fontFamily: {
+            display: ["Inter", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "0.75rem", // 12px
+          },
+        },
+      },
+    };
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24
+    }
+    .material-symbols-outlined.filled {
+      font-variation-settings: 'FILL' 1;
+    }
+  </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-text-primary-light dark:text-text-primary-dark">
+<div class="flex h-screen">
+<main class="flex-1 flex flex-col overflow-y-auto">
+<div class="px-6 md:px-10 py-8 flex-grow">
+<header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
+<div>
+<h1 class="text-3xl font-bold text-text-primary-light dark:text-text-primary-dark">Gerenciamento de Notas</h1>
+<p class="text-text-secondary-light dark:text-text-secondary-dark mt-1">Organize suas notas em grupos e marque as importantes</p>
+</div>
+<div class="flex items-center space-x-2 mt-4 sm:mt-0">
+<button class="flex items-center justify-center px-4 py-2 bg-background-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg text-sm font-medium hover:bg-surface-light dark:hover:bg-zinc-700 transition-colors">
+<span class="material-symbols-outlined text-lg mr-2">create_new_folder</span>
+              Novo Grupo
+            </button>
+<button class="flex items-center justify-center px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-lg mr-2">add</span>
+              Nova Nota
+            </button>
+</div>
+</header>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+<div class="bg-background-light dark:bg-surface-dark p-6 rounded-lg border border-border-light dark:border-border-dark">
+<div class="flex items-center text-text-secondary-light dark:text-text-secondary-dark text-sm mb-2">
+<span class="material-symbols-outlined text-lg mr-2 text-blue-500">folder_open</span>
+              Total de Grupos
+            </div>
+<p class="text-3xl font-bold text-text-primary-light dark:text-text-primary-dark">2</p>
+</div>
+<div class="bg-background-light dark:bg-surface-dark p-6 rounded-lg border border-border-light dark:border-border-dark">
+<div class="flex items-center text-text-secondary-light dark:text-text-secondary-dark text-sm mb-2">
+<span class="material-symbols-outlined text-lg mr-2 text-green-500">description</span>
+              Total de Notas
+            </div>
+<p class="text-3xl font-bold text-text-primary-light dark:text-text-primary-dark">2</p>
+</div>
+<div class="bg-background-light dark:bg-surface-dark p-6 rounded-lg border border-border-light dark:border-border-dark">
+<div class="flex items-center text-text-secondary-light dark:text-text-secondary-dark text-sm mb-2">
+<span class="material-symbols-outlined filled text-lg mr-2 text-yellow-500">star</span>
+              Notas Importantes
+            </div>
+<p class="text-3xl font-bold text-text-primary-light dark:text-text-primary-dark">2</p>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+<div class="relative w-full sm:max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark">search</span>
+<input class="w-full pl-10 pr-4 py-2.5 bg-background-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors" placeholder="Buscar grupos ou notas..." type="text"/>
+</div>
+<button class="flex items-center justify-center px-4 py-2 bg-background-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg text-sm font-medium hover:bg-surface-light dark:hover:bg-zinc-700 transition-colors w-full sm:w-auto">
+<span class="material-symbols-outlined text-lg mr-2">star_outline</span>
+            Apenas Importantes
+          </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<div class="bg-surface-light dark:bg-surface-dark p-4 rounded-lg border border-border-light dark:border-border-dark flex flex-col space-y-4">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-bold text-text-primary-light dark:text-text-primary-dark">Observações da empresa</h3>
+<div class="flex items-center text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1">
+<span>1 notas</span>
+<span class="mx-1.5">•</span>
+<span class="material-symbols-outlined filled text-yellow-500 text-sm mr-1">star</span>
+<span>1 importantes</span>
+</div>
+</div>
+<div class="flex items-center space-x-1 text-text-secondary-light dark:text-text-secondary-dark">
+<button class="p-1.5 rounded-md hover:bg-border-light dark:hover:bg-zinc-700"><span class="material-symbols-outlined text-lg">expand_less</span></button>
+<button class="p-1.5 rounded-md hover:bg-border-light dark:hover:bg-zinc-700"><span class="material-symbols-outlined text-lg">edit</span></button>
+<button class="p-1.5 rounded-md hover:bg-border-light dark:hover:bg-zinc-700"><span class="material-symbols-outlined text-lg">delete</span></button>
+</div>
+</div>
+<button class="w-full text-center py-2.5 border border-dashed border-border-light dark:border-border-dark rounded-lg text-sm text-text-secondary-light dark:text-text-secondary-dark hover:bg-border-light dark:hover:bg-zinc-700 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-lg mr-2">add</span>
+              Adicionar Nota
+            </button>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-4 rounded-lg border border-border-light dark:border-border-dark flex flex-col space-y-4">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-bold text-text-primary-light dark:text-text-primary-dark">Ideias</h3>
+<div class="flex items-center text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1">
+<span>1 notas</span>
+<span class="mx-1.5">•</span>
+<span class="material-symbols-outlined filled text-yellow-500 text-sm mr-1">star</span>
+<span>1 importantes</span>
+</div>
+</div>
+<div class="flex items-center space-x-1 text-text-secondary-light dark:text-text-secondary-dark">
+<button class="p-1.5 rounded-md hover:bg-border-light dark:hover:bg-zinc-700"><span class="material-symbols-outlined text-lg">expand_less</span></button>
+<button class="p-1.5 rounded-md hover:bg-border-light dark:hover:bg-zinc-700"><span class="material-symbols-outlined text-lg">edit</span></button>
+<button class="p-1.5 rounded-md hover:bg-border-light dark:hover:bg-zinc-700"><span class="material-symbols-outlined text-lg">delete</span></button>
+</div>
+</div>
+<button class="w-full text-center py-2.5 border border-dashed border-border-light dark:border-border-dark rounded-lg text-sm text-text-secondary-light dark:text-text-secondary-dark hover:bg-border-light dark:hover:bg-zinc-700 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-lg mr-2">add</span>
+              Adicionar Nota
+            </button>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-4 rounded-lg border border-border-light dark:border-border-dark flex flex-col space-y-4">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-text-primary-light dark:text-text-primary-dark uppercase">Pagamentos Pendentes</h3>
+<div class="flex items-center space-x-1 text-text-secondary-light dark:text-text-secondary-dark">
+<span class="material-symbols-outlined filled text-yellow-500 text-lg">star</span>
+<button class="p-1.5 rounded-md hover:bg-border-light dark:hover:bg-zinc-700"><span class="material-symbols-outlined text-lg">edit</span></button>
+<button class="p-1.5 rounded-md hover:bg-border-light dark:hover:bg-zinc-700"><span class="material-symbols-outlined text-lg">delete</span></button>
+</div>
+</div>
+<div class="text-sm text-text-primary-light dark:text-text-primary-dark space-y-2">
+<p>1. <span class="font-semibold">FOX (31/out)</span></p>
+<p>2. 4263,68 (Belo Vista - parte 01)</p>
+<p>3. 3000 (Consultoria)</p>
+</div>
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark pt-2">25/10/2025, 21:43</p>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-4 rounded-lg border border-border-light dark:border-border-dark flex flex-col space-y-4">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-text-primary-light dark:text-text-primary-dark uppercase">MUDANÇAS ECOSSISTEMA ARCA</h3>
+<div class="flex items-center space-x-1 text-text-secondary-light dark:text-text-secondary-dark">
+<span class="material-symbols-outlined filled text-yellow-500 text-lg">star</span>
+<span class="material-symbols-outlined filled text-yellow-500 text-lg">star</span>
+<button class="p-1.5 rounded-md hover:bg-border-light dark:hover:bg-zinc-700"><span class="material-symbols-outlined text-lg">edit</span></button>
+</div>
+</div>
+<div class="text-sm text-text-primary-light dark:text-text-primary-dark space-y-2">
+<p>1. Colocar login automático no sistema MEUFOCO</p>
+<p>2. Colocar logo da Arca no sistema...</p>
+</div>
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark pt-2">27/10/2025, 07:59</p>
+</div>
+</div>
+</div>
+<nav class="sticky bottom-0 left-0 right-0 bg-background-light dark:bg-background-dark border-t border-border-light dark:border-border-dark mt-auto">
+<div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-around items-center h-16">
+<a class="flex flex-col items-center justify-center w-full text-text-secondary-light dark:text-text-secondary-dark hover:text-primary dark:hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-xs">Início</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full text-text-secondary-light dark:text-text-secondary-dark hover:text-primary dark:hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-xs">Finanças</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full text-text-secondary-light dark:text-text-secondary-dark hover:text-primary dark:hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">link</span>
+<span class="text-xs">Links</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full text-primary dark:text-white transition-colors" href="#">
+<div class="bg-primary text-white dark:bg-green-700 px-6 py-1.5 rounded-full flex flex-col items-center">
+<span class="material-symbols-outlined filled">description</span>
+<span class="text-xs font-semibold">Notas</span>
+</div>
+</a>
+<a class="flex flex-col items-center justify-center w-full text-text-secondary-light dark:text-text-secondary-dark hover:text-primary dark:hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">shield</span>
+<span class="text-xs">Cofre</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full text-text-secondary-light dark:text-text-secondary-dark hover:text-primary dark:hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">center_focus_strong</span>
+<span class="text-xs">Foco</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full text-text-secondary-light dark:text-text-secondary-dark hover:text-primary dark:hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-xs">Config</span>
+</a>
+</div>
+</div>
+</nav>
+</main>
+</div>
+
+</body></html>
