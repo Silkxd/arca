@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, FileText, Star } from 'lucide-react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import { RichTextEditor } from '../ui/RichTextEditor';
 import { Note, NoteGroup, NoteFormData } from '../../store/notesStore';
 
 interface NoteFormProps {
@@ -48,27 +47,6 @@ export const NoteForm: React.FC<NoteFormProps> = ({
       onSubmit(formData);
     }
   };
-
-  // ReactQuill modules configuration
-  const modules = {
-    toolbar: [
-      [{ 'header': [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'indent': '-1'}, { 'indent': '+1' }],
-      ['link'],
-      [{ 'color': [] }, { 'background': [] }],
-      [{ 'align': [] }],
-      ['clean']
-    ],
-  };
-
-  const formats = [
-    'header',
-    'bold', 'italic', 'underline', 'strike',
-    'list', 'bullet', 'indent',
-    'link', 'color', 'background', 'align'
-  ];
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -136,12 +114,9 @@ export const NoteForm: React.FC<NoteFormProps> = ({
                 Conteúdo *
               </label>
               <div className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl overflow-hidden">
-                <ReactQuill
-                  theme="snow"
+                <RichTextEditor
                   value={formData.content}
                   onChange={(content) => setFormData({ ...formData, content })}
-                  modules={modules}
-                  formats={formats}
                   placeholder="Digite o conteúdo da nota..."
                   style={{
                     height: '300px',
