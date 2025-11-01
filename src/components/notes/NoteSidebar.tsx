@@ -24,13 +24,7 @@ export const NoteSidebar: React.FC<NoteSidebarProps> = ({
   onEditGroup,
   onAddGroup,
 }) => {
-  const { noteGroups, notes } = useNotesStore();
-
-  // Calcular contadores
-  const totalNotes = notes.length;
-  const importantNotes = notes.filter(note => note.is_important).length;
-  const getGroupNoteCount = (groupId: string) => 
-    notes.filter(note => note.group_id === groupId).length;
+  const { noteGroups } = useNotesStore();
 
   const sidebarClasses = `
     fixed lg:relative top-0 left-0 h-full bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700
@@ -89,12 +83,7 @@ export const NoteSidebar: React.FC<NoteSidebarProps> = ({
           >
             <FileText size={20} className="flex-shrink-0" />
             {!isCollapsed && (
-              <>
-                <span className="ml-3 font-medium">Todas as notas</span>
-                <span className="ml-auto text-sm bg-emerald-200 dark:bg-emerald-800 text-emerald-800 dark:text-emerald-200 px-2 py-1 rounded-full">
-                  {totalNotes}
-                </span>
-              </>
+              <span className="ml-3 font-medium">Todas as notas</span>
             )}
           </button>
 
@@ -111,12 +100,7 @@ export const NoteSidebar: React.FC<NoteSidebarProps> = ({
           >
             <Star size={20} className="flex-shrink-0" />
             {!isCollapsed && (
-              <>
-                <span className="ml-3 font-medium">Importantes</span>
-                <span className="ml-auto text-sm bg-yellow-200 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded-full">
-                  {importantNotes}
-                </span>
-              </>
+              <span className="ml-3 font-medium">Importantes</span>
             )}
           </button>
 
@@ -169,29 +153,23 @@ export const NoteSidebar: React.FC<NoteSidebarProps> = ({
                 )}
               </button>
               
-              {!isCollapsed && (
+              {!isCollapsed && onEditGroup && (
                 <div className="flex items-center space-x-1 flex-shrink-0 ml-2">
-                  <span className="text-sm bg-emerald-200 dark:bg-emerald-800 text-emerald-800 dark:text-emerald-200 px-2 py-1 rounded-full">
-                    {getGroupNoteCount(group.id)}
-                  </span>
-                  
-                  {onEditGroup && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onEditGroup(group);
-                      }}
-                      className="
-                        p-1 rounded-full transition-all duration-200
-                        text-gray-400 dark:text-gray-500 hover:text-emerald-600 dark:hover:text-emerald-400 
-                        hover:bg-emerald-50 dark:hover:bg-emerald-900/30
-                        opacity-0 group-hover:opacity-100
-                      "
-                      title="Editar grupo"
-                    >
-                      <Edit2 size={14} />
-                    </button>
-                  )}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onEditGroup(group);
+                    }}
+                    className="
+                      p-1 rounded-full transition-all duration-200
+                      text-gray-400 dark:text-gray-500 hover:text-emerald-600 dark:hover:text-emerald-400 
+                      hover:bg-emerald-50 dark:hover:bg-emerald-900/30
+                      opacity-0 group-hover:opacity-100
+                    "
+                    title="Editar grupo"
+                  >
+                    <Edit2 size={14} />
+                  </button>
                 </div>
               )}
             </div>
@@ -213,22 +191,6 @@ export const NoteSidebar: React.FC<NoteSidebarProps> = ({
             </div>
           )}
         </div>
-
-        {/* Footer com informações */}
-        {!isCollapsed && (
-          <div className="border-t border-gray-200 dark:border-gray-700 p-4">
-            <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
-              <div className="flex justify-between">
-                <span>Total de notas:</span>
-                <span className="font-medium">{totalNotes}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Grupos:</span>
-                <span className="font-medium">{noteGroups.length}</span>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </>
   );
