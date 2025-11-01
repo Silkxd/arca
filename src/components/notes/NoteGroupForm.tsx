@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Folder } from 'lucide-react';
+import { X, Folder, Trash2 } from 'lucide-react';
 import { NoteGroup, NoteGroupFormData } from '../../store/notesStore';
 
 const colorOptions = [
@@ -17,6 +17,7 @@ interface NoteGroupFormProps {
   group?: NoteGroup;
   onSubmit: (data: NoteGroupFormData) => void;
   onClose: () => void;
+  onDelete?: (groupId: string) => void;
   loading: boolean;
 }
 
@@ -24,6 +25,7 @@ export const NoteGroupForm: React.FC<NoteGroupFormProps> = ({
   group,
   onSubmit,
   onClose,
+  onDelete,
   loading
 }) => {
   const [formData, setFormData] = useState<NoteGroupFormData>({
@@ -112,21 +114,38 @@ export const NoteGroupForm: React.FC<NoteGroupFormProps> = ({
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              disabled={loading || !formData.name.trim()}
-              className="flex-1 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-xl transition-colors"
-            >
-              {loading ? 'Salvando...' : group ? 'Atualizar' : 'Criar'}
-            </button>
+          <div className="flex items-center justify-between gap-3">
+            {/* Delete button - only show when editing */}
+            {group && onDelete ? (
+              <button
+                type="button"
+                onClick={() => onDelete(group.id)}
+                className="px-4 py-3 bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-xl hover:bg-red-200 dark:hover:bg-red-900/40 transition-colors flex items-center gap-2"
+              >
+                <Trash2 className="w-4 h-4" />
+                Apagar Grupo
+              </button>
+            ) : (
+              <div></div>
+            )}
+
+            {/* Main actions */}
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                disabled={loading || !formData.name.trim()}
+                className="px-4 py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-xl transition-colors"
+              >
+                {loading ? 'Salvando...' : group ? 'Atualizar' : 'Criar'}
+              </button>
+            </div>
           </div>
         </form>
       </div>

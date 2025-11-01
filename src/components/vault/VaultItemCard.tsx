@@ -61,8 +61,8 @@ export const VaultItemCard: React.FC<VaultItemCardProps> = ({ item, onDelete }) 
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-              {item.type === 'document' ? getFileIcon(item.file_type) : <FileText className="w-5 h-5 text-blue-600" />}
+            <div className="p-2 bg-green-50 dark:bg-green-900/20 rounded-lg">
+              {item.type === 'document' ? getFileIcon(item.file_type) : <FileText className="w-5 h-5 text-green-600" />}
             </div>
             <div>
               <h3 className="font-semibold text-gray-900 dark:text-white text-lg">
@@ -86,7 +86,7 @@ export const VaultItemCard: React.FC<VaultItemCardProps> = ({ item, onDelete }) 
           <div className="flex items-center gap-2">
             <button
               onClick={handleViewContent}
-              className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+              className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
               title={item.type === 'text' ? 'Ver conteúdo' : 'Abrir arquivo'}
             >
               <Eye className="w-4 h-4" />

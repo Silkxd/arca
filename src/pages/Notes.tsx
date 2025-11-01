@@ -8,6 +8,7 @@ import { NoteGroupForm } from '../components/notes/NoteGroupForm';
 import { NoteForm } from '../components/notes/NoteForm';
 import { NoteViewModal } from '../components/notes/NoteViewModal';
 import { ConfirmationModal } from '../components/ui/ConfirmationModal';
+import { DeleteGroupModal } from '../components/ui/DeleteGroupModal';
 import { Note, NoteGroup, NoteFormData, NoteGroupFormData } from '../store/notesStore';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { ErrorMessage } from '../components/ui/ErrorBoundary';
@@ -47,6 +48,7 @@ export const Notes: React.FC = () => {
   const [viewingNote, setViewingNote] = useState<Note | undefined>();
   const [deleteNoteModal, setDeleteNoteModal] = useState({ isOpen: false, noteId: '', noteTitle: '' });
   const [deleteGroupModal, setDeleteGroupModal] = useState({ isOpen: false, groupId: '', groupName: '' });
+  const [deleteGroupSpecialModal, setDeleteGroupSpecialModal] = useState({ isOpen: false, groupId: '', groupName: '' });
 
   // Fetch data on mount
   useEffect(() => {
@@ -133,6 +135,24 @@ export const Notes: React.FC = () => {
     try {
       await deleteNoteGroup(deleteGroupModal.groupId);
       setDeleteGroupModal({ isOpen: false, groupId: '', groupName: '' });
+    } catch (error) {
+      console.error('Error deleting group:', error);
+    }
+  };
+
+  const handleDeleteGroupFromForm = (groupId: string) => {
+    const group = noteGroups.find(g => g.id === groupId);
+    if (group) {
+      setDeleteGroupSpecialModal({ isOpen: true, groupId, groupName: group.name });
+    }
+  };
+
+  const confirmDeleteGroupSpecial = async () => {
+    try {
+      await deleteNoteGroup(deleteGroupSpecialModal.groupId);
+      setDeleteGroupSpecialModal({ isOpen: false, groupId: '', groupName: '' });
+      setShowGroupForm(false);
+      setEditingGroup(undefined);
     } catch (error) {
       console.error('Error deleting group:', error);
     }
@@ -234,6 +254,7 @@ export const Notes: React.FC = () => {
         isMobileOpen={isMobileSidebarOpen}
         onMobileToggle={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
         onEditGroup={handleEditGroup}
+        onAddGroup={handleAddGroup}
       />
 
       {/* Main Content */}
@@ -302,6 +323,7 @@ export const Notes: React.FC = () => {
             setShowGroupForm(false);
             setEditingGroup(undefined);
           }}
+          onDelete={handleDeleteGroupFromForm}
           loading={loading}
         />
       )}
@@ -343,6 +365,14 @@ export const Notes: React.FC = () => {
         confirmText="Excluir"
         cancelText="Cancelar"
         type="danger"
+      />
+
+      {/* Delete Group Special Modal */}
+      <DeleteGroupModal
+        isOpen={deleteGroupSpecialModal.isOpen}
+        onClose={() => setDeleteGroupSpecialModal({ isOpen: false, groupId: '', groupName: '' })}
+        onConfirm={confirmDeleteGroupSpecial}
+        groupName={deleteGroupSpecialModal.groupName}
       />
 
       {/* Note View Modal */}

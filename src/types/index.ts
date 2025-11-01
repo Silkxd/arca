@@ -133,6 +133,55 @@ export interface VaultItemFormData {
   notes?: string;
 }
 
+// PJ Projects types
+export interface PJProject {
+  id: string;
+  user_id: string;
+  cidade: string;
+  projeto: string;
+  contratante: string;
+  lotes: number;
+  shape: number;
+  valor: number;
+  status: string;
+  pago: number;
+  pendente: number;
+  obs?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PJProjectFormData {
+  cidade: string;
+  projeto: string;
+  contratante: string;
+  lotes: number;
+  shape: number;
+  valor: number;
+  status: string;
+  pago: number;
+  obs?: string;
+}
+
+export interface PJProjectAnalytics {
+  total_projects: number;
+  total_value: number;
+  total_paid: number;
+  total_pending: number;
+  by_status: Record<string, number>;
+  by_contractor: Record<string, {
+    count: number;
+    total_value: number;
+    total_paid: number;
+    total_pending: number;
+  }>;
+  by_city: Record<string, {
+    count: number;
+    total_value: number;
+  }>;
+  payment_efficiency: number;
+}
+
 // Dashboard statistics
 export interface DashboardStats {
   totalPasswords: number;

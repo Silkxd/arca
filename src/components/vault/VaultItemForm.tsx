@@ -154,7 +154,7 @@ export const VaultItemForm: React.FC<VaultItemFormProps> = ({
                 onClick={() => setFormData({ ...formData, type: 'text' })}
                 className={`p-4 border-2 rounded-lg flex items-center gap-3 transition-colors ${
                   formData.type === 'text'
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                    ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
                     : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
                 }`}
               >
@@ -166,7 +166,7 @@ export const VaultItemForm: React.FC<VaultItemFormProps> = ({
                 onClick={() => setFormData({ ...formData, type: 'document' })}
                 className={`p-4 border-2 rounded-lg flex items-center gap-3 transition-colors ${
                   formData.type === 'document'
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                    ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
                     : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
                 }`}
               >
@@ -185,7 +185,7 @@ export const VaultItemForm: React.FC<VaultItemFormProps> = ({
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-transparent"
               placeholder="Ex: CPF, Certidão de Nascimento, Senha do banco..."
             />
             {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
@@ -199,7 +199,7 @@ export const VaultItemForm: React.FC<VaultItemFormProps> = ({
             <select
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500"
             >
               <option value="">Selecione uma categoria</option>
               {categories.map(category => (
@@ -218,7 +218,7 @@ export const VaultItemForm: React.FC<VaultItemFormProps> = ({
                 value={formData.content}
                 onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                 rows={6}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
                 placeholder="Ex: no sistema meufoco.vercel.app meu usuário é xxxx e minha senha é xxxx"
               />
               {errors.content && <p className="text-red-500 text-sm mt-1">{errors.content}</p>}
@@ -234,7 +234,7 @@ export const VaultItemForm: React.FC<VaultItemFormProps> = ({
               <div
                 className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
                   dragActive
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                    ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
                     : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
                 }`}
                 onDragEnter={handleDrag}
@@ -272,7 +272,7 @@ export const VaultItemForm: React.FC<VaultItemFormProps> = ({
                 />
                 <label
                   htmlFor="file-upload"
-                  className="mt-3 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer transition-colors"
+                  className="mt-3 inline-block px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 cursor-pointer transition-colors"
                 >
                   Selecionar Arquivo
                 </label>
@@ -290,7 +290,7 @@ export const VaultItemForm: React.FC<VaultItemFormProps> = ({
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
               placeholder="Informações adicionais sobre este item..."
             />
           </div>
@@ -307,7 +307,7 @@ export const VaultItemForm: React.FC<VaultItemFormProps> = ({
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {loading ? 'Salvando...' : isEditing ? 'Atualizar' : 'Adicionar'}
             </button>

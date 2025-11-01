@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { User, Building2, PieChart } from 'lucide-react';
+import { User, Building2, PieChart, FolderOpen } from 'lucide-react';
 import { MonthlyPlanningPF } from '../components/finance/MonthlyPlanningPF';
 import { MonthlyPlanningPJ } from '../components/finance/MonthlyPlanningPJ';
 import { PJFinancialControl } from '../components/finance/PJFinancialControl';
+import ProjectsPJ from '../components/finance/ProjectsPJ';
 import { ErrorBoundary } from '../components/ui/ErrorBoundary';
 
-type FinanceTab = 'planning-pf' | 'planning-pj' | 'control-pj';
+type FinanceTab = 'planning-pf' | 'planning-pj' | 'control-pj' | 'projects-pj';
 
 export const Finance: React.FC = () => {
   const [activeTab, setActiveTab] = useState<FinanceTab>('planning-pf');
@@ -28,13 +29,19 @@ export const Finance: React.FC = () => {
       label: 'Controle PJ',
       icon: PieChart,
       description: 'Controle financeiro e faturamento PJ'
+    },
+    {
+      id: 'projects-pj' as const,
+      label: 'Projetos - PJ',
+      icon: FolderOpen,
+      description: 'Gestão de projetos pessoa jurídica'
     }
   ];
 
   const currentTab = tabs.find(tab => tab.id === activeTab);
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="px-4 py-6 max-w-[95%] mx-auto xl:px-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
@@ -80,6 +87,8 @@ export const Finance: React.FC = () => {
           {activeTab === 'planning-pj' && <MonthlyPlanningPJ />}
           
           {activeTab === 'control-pj' && <PJFinancialControl />}
+          
+          {activeTab === 'projects-pj' && <ProjectsPJ />}
         </ErrorBoundary>
       </div>
     </div>

@@ -295,7 +295,7 @@ export const Settings: React.FC = () => {
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="px-4 py-6 max-w-[95%] mx-auto xl:px-6">
       {/* Header */}
       <div className="flex items-center gap-3 mb-8">
         <div className="p-2 bg-emerald-100 dark:bg-emerald-900/20 rounded-xl">
