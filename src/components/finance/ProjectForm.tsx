@@ -25,7 +25,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ projectId, onClose }) => {
     obs: '',
   });
 
-  const [errors, setErrors] = useState<Partial<PJProjectFormData>>({});
+  const [errors, setErrors] = useState<Partial<Record<keyof PJProjectFormData, string>>>({});
 
   useEffect(() => {
     if (projectId) {
@@ -35,11 +35,11 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ projectId, onClose }) => {
           cidade: project.cidade,
           projeto: project.projeto,
           contratante: project.contratante,
-          lotes: project.lotes,
-          shape: project.shape,
-          valor: project.valor,
+          lotes: Number(project.lotes) || 0,
+          shape: Number(project.shape) || 0,
+          valor: Number(project.valor) || 0,
           status: project.status,
-          pago: project.pago,
+          pago: Number(project.pago) || 0,
           obs: project.obs || '',
         });
       }
@@ -47,7 +47,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ projectId, onClose }) => {
   }, [projectId, projects]);
 
   const validateForm = (): boolean => {
-    const newErrors: Partial<PJProjectFormData> = {};
+    const newErrors: Partial<Record<keyof PJProjectFormData, string>> = {};
 
     if (!formData.cidade.trim()) {
       newErrors.cidade = 'Cidade é obrigatória';

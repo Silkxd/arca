@@ -36,16 +36,20 @@ graph TD
 
 ## 2. Descrição da Tecnologia
 
-- Frontend: React@18 + TypeScript + Tailwind CSS@3 + Vite
-- Backend: Supabase (PostgreSQL + Auth + Real-time)
-- State Management: Zustand (seguindo padrão existente)
-- Charts: Recharts (já utilizado no projeto)
-- Icons: Lucide React (padrão do projeto)
+* Frontend: React\@18 + TypeScript + Tailwind CSS\@3 + Vite
+
+* Backend: Supabase (PostgreSQL + Auth + Real-time)
+
+* State Management: Zustand (seguindo padrão existente)
+
+* Charts: Recharts (já utilizado no projeto)
+
+* Icons: Lucide React (padrão do projeto)
 
 ## 3. Definições de Rotas
 
-| Rota | Propósito |
-|------|-----------|
+| Rota     | Propósito                                                           |
+| -------- | ------------------------------------------------------------------- |
 | /finance | Página principal de Finanças com nova aba "Projetos - PJ" integrada |
 
 ## 4. Definições de API
@@ -59,30 +63,33 @@ GET /rest/v1/pj_projects
 ```
 
 Request: Parâmetros de filtro via query string
-| Nome do Parâmetro | Tipo | Obrigatório | Descrição |
-|-------------------|------|-------------|-----------|
-| user_id | UUID | true | ID do usuário autenticado |
-| status | string | false | Filtro por status do projeto |
-| contratante | string | false | Filtro por contratante |
+
+| Nome do Parâmetro | Tipo   | Obrigatório | Descrição                    |
+| ----------------- | ------ | ----------- | ---------------------------- |
+| user\_id          | UUID   | true        | ID do usuário autenticado    |
+| status            | string | false       | Filtro por status do projeto |
+| contratante       | string | false       | Filtro por contratante       |
 
 Response:
-| Nome do Parâmetro | Tipo | Descrição |
-|-------------------|------|-----------|
-| id | UUID | ID único do projeto |
-| cidade | string | Cidade do projeto |
-| projeto | string | Nome do projeto |
-| contratante | string | Nome do contratante |
-| lotes | integer | Quantidade de lotes |
-| shape | integer | Valor shape |
-| valor | decimal | Valor total do projeto |
-| status | string | Status atual (INICIADO, FINALIZADO, etc.) |
-| pago | decimal | Valor já pago |
-| pendente | decimal | Valor pendente |
-| observacoes | text | Observações do projeto |
-| created_at | timestamp | Data de criação |
-| updated_at | timestamp | Data de atualização |
+
+| Nome do Parâmetro | Tipo      | Descrição                                 |
+| ----------------- | --------- | ----------------------------------------- |
+| id                | UUID      | ID único do projeto                       |
+| cidade            | string    | Cidade do projeto                         |
+| projeto           | string    | Nome do projeto                           |
+| contratante       | string    | Nome do contratante                       |
+| lotes             | integer   | Quantidade de lotes                       |
+| shape             | integer   | Valor shape                               |
+| valor             | decimal   | Valor total do projeto                    |
+| status            | string    | Status atual (INICIADO, FINALIZADO, etc.) |
+| pago              | decimal   | Valor já pago                             |
+| pendente          | decimal   | Valor pendente                            |
+| observacoes       | text      | Observações do projeto                    |
+| created\_at       | timestamp | Data de criação                           |
+| updated\_at       | timestamp | Data de atualização                       |
 
 Exemplo Response:
+
 ```json
 [
   {
@@ -108,17 +115,18 @@ POST /rest/v1/pj_projects
 ```
 
 Request:
-| Nome do Parâmetro | Tipo | Obrigatório | Descrição |
-|-------------------|------|-------------|-----------|
-| cidade | string | true | Cidade do projeto |
-| projeto | string | true | Nome do projeto |
-| contratante | string | true | Nome do contratante |
-| lotes | integer | true | Quantidade de lotes |
-| shape | integer | false | Valor shape |
-| valor | decimal | true | Valor total do projeto |
-| status | string | true | Status inicial |
-| pago | decimal | false | Valor já pago (default: 0) |
-| observacoes | text | false | Observações |
+
+| Nome do Parâmetro | Tipo    | Obrigatório | Descrição                  |
+| ----------------- | ------- | ----------- | -------------------------- |
+| cidade            | string  | true        | Cidade do projeto          |
+| projeto           | string  | true        | Nome do projeto            |
+| contratante       | string  | true        | Nome do contratante        |
+| lotes             | integer | true        | Quantidade de lotes        |
+| shape             | integer | false       | Valor shape                |
+| valor             | decimal | true        | Valor total do projeto     |
+| status            | string  | true        | Status inicial             |
+| pago              | decimal | false       | Valor já pago (default: 0) |
+| observacoes       | text    | false       | Observações                |
 
 ```
 PUT /rest/v1/pj_projects?id=eq.{project_id}
@@ -137,15 +145,16 @@ GET /rest/v1/rpc/get_projects_analytics
 ```
 
 Response:
-| Nome do Parâmetro | Tipo | Descrição |
-|-------------------|------|-----------|
-| total_projects | integer | Total de projetos |
-| total_value | decimal | Valor total de todos os projetos |
-| total_paid | decimal | Total já pago |
-| total_pending | decimal | Total pendente |
-| by_contractor | array | Agrupamento por contratante |
-| by_status | array | Agrupamento por status |
-| by_city | array | Agrupamento por cidade |
+
+| Nome do Parâmetro | Tipo    | Descrição                        |
+| ----------------- | ------- | -------------------------------- |
+| total\_projects   | integer | Total de projetos                |
+| total\_value      | decimal | Valor total de todos os projetos |
+| total\_paid       | decimal | Total já pago                    |
+| total\_pending    | decimal | Total pendente                   |
+| by\_contractor    | array   | Agrupamento por contratante      |
+| by\_status        | array   | Agrupamento por status           |
+| by\_city          | array   | Agrupamento por cidade           |
 
 ## 5. Diagrama da Arquitetura do Servidor
 
@@ -208,7 +217,7 @@ erDiagram
 
 ### 6.2 Linguagem de Definição de Dados
 
-**Tabela de Projetos PJ (pj_projects)**
+**Tabela de Projetos PJ (pj\_projects)**
 
 ```sql
 -- Criar tabela
@@ -343,3 +352,4 @@ VALUES
     (auth.uid(), 'Lagoa do Barro', 'Município', 'DR. THIAGO', 300, 40, 12000.00, 'FINALIZADO', 5000.00, ''),
     (auth.uid(), 'Campo Maior', 'Agenor Melo', 'ESTADO', 51, 12, 3612.00, 'INICIADO', 0, '');
 ```
+
