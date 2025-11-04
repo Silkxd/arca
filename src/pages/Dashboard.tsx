@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, DollarSign, FileText, Target, ArrowRight, TrendingUp, Lock, Brain, CheckCircle } from 'lucide-react';
+import { Shield, DollarSign, FileText, Target, ArrowRight, TrendingUp, Lock, Brain, CheckCircle, Link, Bookmark } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ArcaLogo from '../assets/Arca_logo.svg';
 
@@ -23,19 +23,19 @@ export const Dashboard: React.FC = () => {
       badge: 'Finanças'
     },
     {
-      id: 'vault',
-      title: 'Arca Sec',
-      description: 'Cofre digital para documentos e informações seguras',
-      detailedDescription: 'Proteja seus dados com criptografia avançada',
-      features: ['Criptografia Avançada', 'Documentos Seguros', 'Backup Automático', 'Acesso Controlado'],
-      icon: Shield,
-      secondaryIcon: Lock,
-      path: '/vault',
-      gradient: 'from-blue-500 to-indigo-600',
-      bgColor: 'bg-blue-50 dark:bg-blue-900/10',
-      iconColor: 'text-blue-600',
-      borderColor: 'border-blue-200 dark:border-blue-800/30',
-      badge: 'Segurança'
+      id: 'links',
+      title: 'Arca Links',
+      description: 'Organize e gerencie seus links favoritos',
+      detailedDescription: 'Centralize todos os seus links importantes em um só lugar',
+      features: ['Links Organizados', 'Grupos Personalizados', 'Acesso Rápido', 'Interface Intuitiva'],
+      icon: Link,
+      secondaryIcon: Bookmark,
+      path: '/links',
+      gradient: 'from-cyan-500 to-blue-600',
+      bgColor: 'bg-cyan-50 dark:bg-cyan-900/10',
+      iconColor: 'text-cyan-600',
+      borderColor: 'border-cyan-200 dark:border-cyan-800/30',
+      badge: 'Links'
     },
     {
       id: 'notes',
@@ -51,6 +51,21 @@ export const Dashboard: React.FC = () => {
       iconColor: 'text-purple-600',
       borderColor: 'border-purple-200 dark:border-purple-800/30',
       badge: 'Produtividade'
+    },
+    {
+      id: 'vault',
+      title: 'Arca Sec',
+      description: 'Cofre digital para documentos e informações seguras',
+      detailedDescription: 'Proteja seus dados com criptografia avançada',
+      features: ['Criptografia Avançada', 'Documentos Seguros', 'Backup Automático', 'Acesso Controlado'],
+      icon: Shield,
+      secondaryIcon: Lock,
+      path: '/vault',
+      gradient: 'from-blue-500 to-indigo-600',
+      bgColor: 'bg-blue-50 dark:bg-blue-900/10',
+      iconColor: 'text-blue-600',
+      borderColor: 'border-blue-200 dark:border-blue-800/30',
+      badge: 'Segurança'
     },
     {
       id: 'foco',
@@ -74,22 +89,22 @@ export const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="px-4 py-6 max-w-[95%] mx-auto h-full flex flex-col xl:px-6">
+    <div className="px-4 py-4 max-w-[95%] mx-auto h-full flex flex-col xl:px-6">
       {/* Header */}
-      <div className="text-center mb-8">
-        <div className="flex justify-center mb-4">
-          <img src={ArcaLogo} alt="Arca Logo" className="h-16 w-auto" />
+      <div className="text-center mb-4">
+        <div className="flex justify-center mb-2">
+          <img src={ArcaLogo} alt="Arca Logo" className="h-12 w-auto" />
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
           Ecosistema Arca
         </h1>
-        <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        <p className="text-sm text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
           Centralize dados, informações e produtividade em um só lugar
         </p>
       </div>
 
       {/* Arca Modules Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-full mx-auto flex-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 max-w-full mx-auto flex-1">
         {arcaModules.map((module) => {
           const IconComponent = module.icon;
           const SecondaryIconComponent = module.secondaryIcon;
@@ -100,26 +115,26 @@ export const Dashboard: React.FC = () => {
               className={`
                 group relative overflow-hidden rounded-xl border-2 ${module.borderColor} ${module.bgColor}
                 hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer
-                bg-white dark:bg-gray-800/50 backdrop-blur-sm min-h-[320px]
+                bg-white dark:bg-gray-800/50 backdrop-blur-sm min-h-[240px]
               `}
             >
               {/* Gradient Overlay */}
               <div className={`absolute inset-0 bg-gradient-to-br ${module.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
               
-              <div className="relative p-6 h-full flex flex-col">
+              <div className="relative p-4 h-full flex flex-col">
                 {/* Header with Badge */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`inline-flex p-4 rounded-xl ${module.bgColor} group-hover:scale-110 transition-transform duration-300`}>
-                    <IconComponent className={`w-8 h-8 ${module.iconColor}`} />
+                <div className="flex items-center justify-between mb-3">
+                  <div className={`inline-flex p-3 rounded-xl ${module.bgColor} group-hover:scale-110 transition-transform duration-300`}>
+                    <IconComponent className={`w-6 h-6 ${module.iconColor}`} />
                   </div>
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${module.bgColor} ${module.iconColor} border ${module.borderColor}`}>
+                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${module.bgColor} ${module.iconColor} border ${module.borderColor}`}>
                     {module.badge}
                   </span>
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 space-y-3">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors">
+                <div className="flex-1 space-y-2.5">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors">
                     {module.title}
                   </h3>
                   
@@ -132,8 +147,8 @@ export const Dashboard: React.FC = () => {
                   </p>
 
                   {/* Features List */}
-                  <div className="space-y-2 mt-4">
-                    <div className="flex items-center gap-2 mb-2">
+                  <div className="space-y-2 mt-3">
+                    <div className="flex items-center gap-2 mb-1.5">
                       <SecondaryIconComponent className={`w-4 h-4 ${module.iconColor}`} />
                       <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Principais funcionalidades:</span>
                     </div>
@@ -149,8 +164,8 @@ export const Dashboard: React.FC = () => {
                 </div>
 
                 {/* Arrow Icon */}
-                <div className="flex justify-end mt-4">
-                  <div className={`p-2 rounded-full ${module.bgColor} group-hover:${module.bgColor.replace('50', '100')} transition-all duration-300`}>
+                <div className="flex justify-end mt-3">
+                  <div className={`p-1.5 rounded-full ${module.bgColor} transition-all duration-300`}>
                     <ArrowRight className={`w-4 h-4 ${module.iconColor} group-hover:translate-x-1 transition-transform duration-300`} />
                   </div>
                 </div>
@@ -161,8 +176,8 @@ export const Dashboard: React.FC = () => {
       </div>
 
       {/* Footer */}
-      <div className="text-center mt-8 pb-4">
-        <p className="text-sm text-gray-500 dark:text-gray-500">
+      <div className="text-center mt-4 pb-3">
+        <p className="text-xs text-gray-500 dark:text-gray-500">
           Escolha um módulo para começar sua jornada no Ecosistema Arca
         </p>
       </div>

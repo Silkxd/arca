@@ -101,4 +101,22 @@
   .arca-nav-item.active {
     @apply bg-primary text-primary-foreground;
   }
+
+  /* RichTextEditor: keep toolbar visible and make content scroll */
+  .rich-text-editor {
+    @apply h-[300px] overflow-y-auto rounded-xl;
+  }
+  .rich-text-editor .ql-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    @apply bg-white dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600;
+  }
+  .rich-text-editor .ql-container {
+    @apply bg-white dark:bg-gray-700;
+    height: auto; /* override Quill default to allow wrapper to control scroll */
+  }
+  .rich-text-editor .ql-editor {
+    min-height: 220px; /* space below toolbar within 300px wrapper */
+  }
 }

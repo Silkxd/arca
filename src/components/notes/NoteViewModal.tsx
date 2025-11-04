@@ -15,9 +15,9 @@ export const NoteViewModal: React.FC<NoteViewModalProps> = ({
 }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-xl">
               <FileText className="w-5 h-5 text-blue-600" />
@@ -61,8 +61,8 @@ export const NoteViewModal: React.FC<NoteViewModalProps> = ({
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
-          <div className="prose prose-lg max-w-none dark:prose-invert ql-snow">
+        <div className="p-4 overflow-y-auto max-h-[calc(80vh-120px)]">
+          <div className="prose max-w-none dark:prose-invert ql-snow">
             <div
               className="ql-editor min-h-[200px]"
               dangerouslySetInnerHTML={{ __html: note.content }}
