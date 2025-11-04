@@ -62,10 +62,10 @@ export const NoteViewModal: React.FC<NoteViewModalProps> = ({
 
         {/* Content */}
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
-          <div className="prose prose-lg max-w-none dark:prose-invert">
-            <div 
+          <div className="prose prose-lg max-w-none dark:prose-invert ql-snow">
+            <div
+              className="ql-editor min-h-[200px]"
               dangerouslySetInnerHTML={{ __html: note.content }}
-              className="min-h-[200px]"
             />
           </div>
         </div>

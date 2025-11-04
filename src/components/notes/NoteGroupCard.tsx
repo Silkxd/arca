@@ -162,10 +162,10 @@ export const NoteGroupCard: React.FC<NoteGroupCardProps> = ({
                     </button>
                   </div>
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
-                  <div 
+                <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3 ql-snow">
+                  <div
+                    className="prose prose-sm max-w-none dark:prose-invert ql-editor"
                     dangerouslySetInnerHTML={{ __html: note.content }} 
-                    className="prose prose-sm max-w-none dark:prose-invert"
                   />
                 </div>
                 <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
