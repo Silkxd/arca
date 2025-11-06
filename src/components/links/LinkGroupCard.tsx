@@ -63,7 +63,7 @@ export const LinkGroupCard: React.FC<LinkGroupCardProps> = ({
   const colorClasses = getColorClasses(group.color);
 
   return (
-    <div className={`${colorClasses.bg} ${colorClasses.border} border-2 rounded-2xl p-6 transition-all duration-200 ${colorClasses.hover}`}>
+    <div className={`${colorClasses.bg} ${colorClasses.border} border-2 rounded-2xl p-6 transition-all duration-200 ${colorClasses.hover} arca-card-elevated`}>
       {/* Group Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">

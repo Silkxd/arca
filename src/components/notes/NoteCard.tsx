@@ -47,7 +47,7 @@ export const NoteCard: React.FC<NoteCardProps> = ({
         group relative bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700
         hover:border-emerald-200 dark:hover:border-emerald-600 hover:shadow-md dark:hover:shadow-lg transition-all duration-200 
         cursor-pointer p-4 h-32 flex flex-col justify-between
-        hover:scale-[1.02] active:scale-[0.98]
+        hover:scale-[1.02] active:scale-[0.98] arca-card-elevated
       "
     >
       {/* Header com título e ações */}

@@ -191,7 +191,7 @@ const ProjectsAnalytics: React.FC<ProjectsAnalyticsProps> = ({ loading }) => {
       </div>
 
       {/* Payment Efficiency */}
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 arca-card-elevated">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
             Eficiência de Pagamento

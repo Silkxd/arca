@@ -62,7 +62,7 @@ export const FinanceCharts: React.FC<FinanceChartsProps> = ({
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Balance Overview */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 arca-card-elevated">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           Visão Geral do Mês
         </h3>
@@ -99,7 +99,7 @@ export const FinanceCharts: React.FC<FinanceChartsProps> = ({
       </div>
 
       {/* Category Breakdown */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 arca-card-elevated">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           Gastos por Categoria
         </h3>
@@ -118,7 +118,7 @@ export const FinanceCharts: React.FC<FinanceChartsProps> = ({
 
       {/* Monthly Trend (if data available) */}
       {monthlyTrend.length > 0 && (
-        <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+        <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 arca-card-elevated">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
             Tendência dos Últimos Meses
           </h3>
