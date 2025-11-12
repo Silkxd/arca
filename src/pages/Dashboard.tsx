@@ -89,7 +89,7 @@ export const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="px-4 py-4 max-w-[95%] mx-auto h-full flex flex-col xl:px-6">
+    <div className="px-3 sm:px-4 py-4 max-w-[100%] sm:max-w-[95%] mx-auto h-full flex flex-col xl:px-6">
       {/* Header */}
       <div className="text-center mb-4">
         <div className="flex justify-center mb-2">
@@ -104,7 +104,7 @@ export const Dashboard: React.FC = () => {
       </div>
 
       {/* Arca Modules Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 max-w-full mx-auto flex-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4 max-w-full mx-auto flex-1">
         {arcaModules.map((module) => {
           const IconComponent = module.icon;
           const SecondaryIconComponent = module.secondaryIcon;
@@ -121,11 +121,11 @@ export const Dashboard: React.FC = () => {
               {/* Gradient Overlay */}
               <div className={`absolute inset-0 bg-gradient-to-br ${module.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
               
-              <div className="relative p-4 h-full flex flex-col">
+              <div className="relative p-3 sm:p-4 h-full flex flex-col">
                 {/* Header with Badge */}
                 <div className="flex items-center justify-between mb-3">
-                  <div className={`inline-flex p-3 rounded-xl ${module.bgColor} group-hover:scale-110 transition-transform duration-300`}>
-                    <IconComponent className={`w-6 h-6 ${module.iconColor}`} />
+                  <div className={`inline-flex p-2.5 sm:p-3 rounded-xl ${module.bgColor} group-hover:scale-110 transition-transform duration-300`}>
+                    <IconComponent className={`w-5 sm:w-6 h-5 sm:h-6 ${module.iconColor}`} />
                   </div>
                   <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${module.bgColor} ${module.iconColor} border ${module.borderColor}`}>
                     {module.badge}
@@ -134,29 +134,29 @@ export const Dashboard: React.FC = () => {
 
                 {/* Content */}
                 <div className="flex-1 space-y-2.5">
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors">
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors">
                     {module.title}
                   </h3>
                   
-                  <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  <p className="text-sm sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                     {module.description}
                   </p>
                   
-                  <p className="text-xs text-gray-500 dark:text-gray-500 italic">
+                  <p className="text-[11px] sm:text-xs text-gray-500 dark:text-gray-500 italic">
                     {module.detailedDescription}
                   </p>
 
                   {/* Features List */}
                   <div className="space-y-2 mt-3">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <SecondaryIconComponent className={`w-4 h-4 ${module.iconColor}`} />
+                      <SecondaryIconComponent className={`w-3.5 sm:w-4 h-3.5 sm:h-4 ${module.iconColor}`} />
                       <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Principais funcionalidades:</span>
                     </div>
                     <div className="grid grid-cols-2 gap-1">
                       {module.features.map((feature, index) => (
                         <div key={index} className="flex items-center gap-1">
                           <div className={`w-1.5 h-1.5 rounded-full ${module.bgColor.replace('50', '200').replace('900/10', '600')}`} />
-                          <span className="text-xs text-gray-600 dark:text-gray-400">{feature}</span>
+                          <span className="text-[11px] sm:text-xs text-gray-600 dark:text-gray-400">{feature}</span>
                         </div>
                       ))}
                     </div>
@@ -165,8 +165,8 @@ export const Dashboard: React.FC = () => {
 
                 {/* Arrow Icon */}
                 <div className="flex justify-end mt-3">
-                  <div className={`p-1.5 rounded-full ${module.bgColor} transition-all duration-300`}>
-                    <ArrowRight className={`w-4 h-4 ${module.iconColor} group-hover:translate-x-1 transition-transform duration-300`} />
+                  <div className={`p-1.5 sm:p-1.5 rounded-full ${module.bgColor} transition-all duration-300`}>
+                    <ArrowRight className={`w-3.5 sm:w-4 h-3.5 sm:h-4 ${module.iconColor} group-hover:translate-x-1 transition-transform duration-300`} />
                   </div>
                 </div>
               </div>

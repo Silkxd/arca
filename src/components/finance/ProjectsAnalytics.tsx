@@ -122,10 +122,10 @@ const ProjectsAnalytics: React.FC<ProjectsAnalyticsProps> = ({ loading }) => {
   const COLORS = ['#10B981', '#3B82F6', '#F59E0B', '#EF4444', '#8B5CF6', '#F97316'];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-6">
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+        <div className="bg-white dark:bg-gray-800 p-4 lg:p-6 rounded-lg border border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
@@ -141,7 +141,7 @@ const ProjectsAnalytics: React.FC<ProjectsAnalyticsProps> = ({ loading }) => {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-800 p-4 lg:p-6 rounded-lg border border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
@@ -157,7 +157,7 @@ const ProjectsAnalytics: React.FC<ProjectsAnalyticsProps> = ({ loading }) => {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-800 p-4 lg:p-6 rounded-lg border border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
@@ -173,7 +173,7 @@ const ProjectsAnalytics: React.FC<ProjectsAnalyticsProps> = ({ loading }) => {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-800 p-4 lg:p-6 rounded-lg border border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
@@ -213,13 +213,13 @@ const ProjectsAnalytics: React.FC<ProjectsAnalyticsProps> = ({ loading }) => {
       </div>
 
       {/* Charts Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
         {/* Status Distribution */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-800 p-4 lg:p-6 rounded-lg border border-gray-200 dark:border-gray-700">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
             Distribuição por Status
           </h3>
-          <div className="h-64">
+          <div className="h-56 sm:h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -243,11 +243,11 @@ const ProjectsAnalytics: React.FC<ProjectsAnalyticsProps> = ({ loading }) => {
         </div>
 
         {/* Top Contractors */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-800 p-4 lg:p-6 rounded-lg border border-gray-200 dark:border-gray-700">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
             Principais Contratantes
           </h3>
-          <div className="h-64">
+          <div className="h-56 sm:h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={contractorData}>
                 <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
@@ -276,11 +276,11 @@ const ProjectsAnalytics: React.FC<ProjectsAnalyticsProps> = ({ loading }) => {
         </div>
 
         {/* Cities Distribution */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-800 p-4 lg:p-6 rounded-lg border border-gray-200 dark:border-gray-700">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
             Projetos por Cidade
           </h3>
-          <div className="h-64">
+          <div className="h-56 sm:h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={cityData}>
                 <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
@@ -344,7 +344,7 @@ const ProjectsAnalytics: React.FC<ProjectsAnalyticsProps> = ({ loading }) => {
       </div>
 
       {/* Detailed Stats */}
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <div className="bg-white dark:bg-gray-800 p-4 lg:p-6 rounded-lg border border-gray-200 dark:border-gray-700">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           Estatísticas Detalhadas
         </h3>

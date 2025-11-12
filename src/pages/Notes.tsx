@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Plus, Search, Filter, FileText, Folder, AlertCircle, Star } from 'lucide-react';
 import { useNotesStore } from '../store/notesStore';
 import { NoteSidebar } from '../components/notes/NoteSidebar';
-import { SearchBar } from '../components/notes/SearchBar';
+import { SearchBar } from '../components/ui/SearchBar';
 import { NoteGrid } from '../components/notes/NoteGrid';
 import { NoteGroupForm } from '../components/notes/NoteGroupForm';
 import { NoteForm } from '../components/notes/NoteForm';
@@ -269,6 +269,7 @@ export const Notes: React.FC = () => {
             placeholder="Buscar notas..."
             className="max-w-2xl"
             onAddNote={() => setShowNoteForm(true)}
+            actionLabel="Nova Nota"
           />
         </div>
 

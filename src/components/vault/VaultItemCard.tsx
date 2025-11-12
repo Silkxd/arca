@@ -57,18 +57,22 @@ export const VaultItemCard: React.FC<VaultItemCardProps> = ({ item, onDelete }) 
 
   return (
     <>
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow arca-card-elevated">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-3 sm:p-4 lg:p-6 hover:shadow-md transition-shadow arca-card-elevated">
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-green-50 dark:bg-green-900/20 rounded-lg">
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="p-2 sm:p-3 bg-green-50 dark:bg-green-900/20 rounded-lg flex-shrink-0">
               {item.type === 'document' ? getFileIcon(item.file_type) : <FileText className="w-5 h-5 text-green-600" />}
             </div>
-            <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white text-lg">
+            <div className="flex-1 min-w-0">
+              <h3
+                className="font-semibold text-gray-900 dark:text-white text-lg leading-6 pr-2"
+                title={item.title}
+                style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
+              >
                 {item.title}
               </h3>
-              <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+              <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 flex-wrap">
                 <span className="capitalize">{item.type === 'document' ? 'Documento' : 'Texto'}</span>
                 {item.category && (
                   <>
@@ -83,39 +87,39 @@ export const VaultItemCard: React.FC<VaultItemCardProps> = ({ item, onDelete }) 
             </div>
           </div>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-shrink-0 ml-2">
             <button
               onClick={handleViewContent}
-              className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
+              className="p-2 sm:p-3 sm:h-12 min-h-[44px] text-gray-400 hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
               title={item.type === 'text' ? 'Ver conteúdo' : 'Abrir arquivo'}
             >
-              <Eye className="w-4 h-4" />
+              <Eye className="w-5 h-5" />
             </button>
             
             {item.type === 'document' && item.file_url && (
               <button
                 onClick={handleDownload}
-                className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
+                className="p-2 sm:p-3 sm:h-12 min-h-[44px] text-gray-400 hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
                 title="Baixar arquivo"
               >
-                <Download className="w-4 h-4" />
+                <Download className="w-5 h-5" />
               </button>
             )}
             
             <button
               onClick={() => setShowEditForm(true)}
-              className="p-2 text-gray-400 hover:text-yellow-600 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 rounded-lg transition-colors"
+              className="p-2 sm:p-3 sm:h-12 min-h-[44px] text-gray-400 hover:text-yellow-600 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 rounded-lg transition-colors"
               title="Editar"
             >
-              <Edit className="w-4 h-4" />
+              <Edit className="w-5 h-5" />
             </button>
             
             <button
               onClick={() => onDelete(item.id, item.title)}
-              className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+              className="p-2 sm:p-3 sm:h-12 min-h-[44px] text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
               title="Excluir"
             >
-              <Trash2 className="w-4 h-4" />
+              <Trash2 className="w-5 h-5" />
             </button>
           </div>
         </div>

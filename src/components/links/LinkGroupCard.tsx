@@ -63,7 +63,7 @@ export const LinkGroupCard: React.FC<LinkGroupCardProps> = ({
   const colorClasses = getColorClasses(group.color);
 
   return (
-    <div className={`${colorClasses.bg} ${colorClasses.border} border-2 rounded-2xl p-6 transition-all duration-200 ${colorClasses.hover} arca-card-elevated`}>
+    <div className={`${colorClasses.bg} ${colorClasses.border} border-2 rounded-2xl p-3 sm:p-4 lg:p-6 transition-all duration-200 ${colorClasses.hover} arca-card-elevated`}>
       {/* Group Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
@@ -85,7 +85,7 @@ export const LinkGroupCard: React.FC<LinkGroupCardProps> = ({
         <div className="relative">
           <button
             onClick={toggleGroupMenu}
-            className="p-2 hover:bg-white/50 dark:hover:bg-gray-800/50 rounded-xl transition-colors"
+            className="p-2 sm:p-3 sm:h-12 min-h-[44px] hover:bg-white/50 dark:hover:bg-gray-800/50 rounded-xl transition-colors"
           >
             <MoreVertical className="w-4 h-4 text-gray-500" />
           </button>
@@ -97,7 +97,7 @@ export const LinkGroupCard: React.FC<LinkGroupCardProps> = ({
                   onEditGroup(group);
                   setShowGroupMenu(false);
                 }}
-                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="w-full flex items-center gap-2 px-3 py-2 sm:py-3 sm:h-12 min-h-[44px] text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
               >
                 <Edit className="w-4 h-4" />
                 Editar Grupo
@@ -107,7 +107,7 @@ export const LinkGroupCard: React.FC<LinkGroupCardProps> = ({
                   setDeleteGroupModal(true);
                   setShowGroupMenu(false);
                 }}
-                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+                className="w-full flex items-center gap-2 px-3 py-2 sm:py-3 sm:h-12 min-h-[44px] text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
               >
                 <Trash2 className="w-4 h-4" />
                 Excluir Grupo
@@ -129,7 +129,7 @@ export const LinkGroupCard: React.FC<LinkGroupCardProps> = ({
             </p>
             <button
               onClick={() => onAddLink(group.id)}
-              className={`inline-flex items-center gap-2 px-4 py-2 ${colorClasses.text} bg-white dark:bg-gray-800 border ${colorClasses.border} rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors`}
+              className={`inline-flex items-center gap-2 px-4 py-2 sm:py-3 sm:h-12 min-h-[44px] ${colorClasses.text} bg-white dark:bg-gray-800 border ${colorClasses.border} rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors`}
             >
               <Plus className="w-4 h-4" />
               Adicionar Link
@@ -140,13 +140,13 @@ export const LinkGroupCard: React.FC<LinkGroupCardProps> = ({
             {links.map(link => (
               <div
                 key={link.id}
-                className="flex items-center gap-3 p-3 bg-white/70 dark:bg-gray-800/70 rounded-xl border border-white/50 dark:border-gray-700/50 hover:bg-white dark:hover:bg-gray-800 transition-colors group"
+                className="flex items-center gap-3 p-3 sm:p-4 bg-white/70 dark:bg-gray-800/70 rounded-xl border border-white/50 dark:border-gray-700/50 hover:bg-white dark:hover:bg-gray-800 transition-colors group"
               >
                 <button
                   onClick={() => onOpenLink(link.url)}
                   className="flex-1 flex items-center gap-3 text-left"
                 >
-                  <div className="p-2 bg-gray-100 dark:bg-gray-700 rounded-lg group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors">
+                  <div className="p-2 sm:p-3 bg-gray-100 dark:bg-gray-700 rounded-lg group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors">
                     <ExternalLink className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -159,7 +159,7 @@ export const LinkGroupCard: React.FC<LinkGroupCardProps> = ({
                 <div className="relative">
                   <button
                     onClick={() => toggleLinkMenu(link.id)}
-                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
+                    className="p-2 sm:p-3 sm:h-12 min-h-[44px] hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
                   >
                     <MoreVertical className="w-4 h-4 text-gray-500" />
                   </button>
@@ -171,7 +171,7 @@ export const LinkGroupCard: React.FC<LinkGroupCardProps> = ({
                           onEditLink(link);
                           setShowLinkMenus(prev => ({ ...prev, [link.id]: false }));
                         }}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                        className="w-full flex items-center gap-2 px-3 py-2 sm:py-3 sm:h-12 min-h-[44px] text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                       >
                         <Edit className="w-4 h-4" />
                         Editar
@@ -185,7 +185,7 @@ export const LinkGroupCard: React.FC<LinkGroupCardProps> = ({
                           });
                           setShowLinkMenus({});
                         }}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+                        className="w-full flex items-center gap-2 px-3 py-2 sm:py-3 sm:h-12 min-h-[44px] text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
                       >
                         <Trash2 className="w-4 h-4" />
                         Excluir
@@ -199,7 +199,7 @@ export const LinkGroupCard: React.FC<LinkGroupCardProps> = ({
             {/* Add Link Button */}
             <button
               onClick={() => onAddLink(group.id)}
-              className={`w-full flex items-center justify-center gap-2 p-3 border-2 border-dashed ${colorClasses.border} ${colorClasses.text} rounded-xl hover:bg-white/50 dark:hover:bg-gray-800/50 transition-colors`}
+              className={`w-full flex items-center justify-center gap-2 p-3 sm:p-4 sm:h-12 min-h-[44px] border-2 border-dashed ${colorClasses.border} ${colorClasses.text} rounded-xl hover:bg-white/50 dark:hover:bg-gray-800/50 transition-colors`}
             >
               <Plus className="w-4 h-4" />
               Adicionar Link

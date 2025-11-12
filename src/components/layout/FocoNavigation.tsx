@@ -76,7 +76,7 @@ export const FocoNavigation: React.FC = () => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm border-t border-gray-200 dark:border-gray-700 z-50 transition-all duration-300 transform translate-y-0">
-      <div className="flex items-center justify-between px-2 py-1 min-h-[30px]">
+      <div className="flex items-center justify-between px-2 py-1 pb-[calc(0.25rem+env(safe-area-inset-bottom))] min-h-[44px]">
         {/* Navigation Items */}
         <div className="flex items-center justify-around flex-1 max-w-[calc(100%-30px)]">
           {navItems.map((item) => {
@@ -88,13 +88,13 @@ export const FocoNavigation: React.FC = () => {
                 key={item.id}
                 onClick={() => handleNavigation(item.path)}
                 className={cn(
-                  'flex items-center justify-center p-1.5 rounded-lg transition-all duration-200',
+                  'flex items-center justify-center p-2 rounded-lg transition-all duration-200 min-w-[40px] min-h-[40px]',
                   isActive
                     ? 'bg-primary text-primary-foreground'
                     : 'text-muted-foreground hover:text-foreground hover:bg-accent'
                 )}
               >
-                <Icon className="w-4 h-4" />
+                <Icon className="w-5 h-5" />
               </button>
             )
           })}
@@ -103,10 +103,10 @@ export const FocoNavigation: React.FC = () => {
         {/* Minimize Button */}
         <button
           onClick={toggleMinimized}
-          className="ml-1 p-1.5 text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-all duration-200 flex-shrink-0 border border-gray-300 dark:border-gray-600"
+          className="ml-1 p-2 text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-all duration-200 flex-shrink-0 border border-gray-300 dark:border-gray-600 min-w-[40px] min-h-[40px]"
           title="Minimizar navegação"
         >
-          <ChevronDown className="w-4 h-4" />
+          <ChevronDown className="w-5 h-5" />
         </button>
       </div>
     </div>

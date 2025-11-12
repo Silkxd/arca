@@ -46,7 +46,7 @@ export const NoteSidebar: React.FC<NoteSidebarProps> = ({
       {/* Sidebar */}
       <div className={sidebarClasses}>
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between p-4 pt-[calc(1rem+env(safe-area-inset-top))] border-b border-gray-200 dark:border-gray-700">
           {!isCollapsed && (
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Notas</h2>
           )}
@@ -54,9 +54,9 @@ export const NoteSidebar: React.FC<NoteSidebarProps> = ({
           {/* Mobile Close Button */}
           <button
             onClick={onMobileToggle}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors"
+            className="lg:hidden p-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors min-w-[44px] min-h-[44px]"
           >
-            <X size={20} />
+            <X size={22} />
           </button>
           
           {/* Desktop Collapse Toggle */}

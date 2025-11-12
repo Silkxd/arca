@@ -58,12 +58,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             <button
               onClick={onMobileMenuToggle}
               className="
-                lg:hidden flex items-center justify-center w-10 h-10 
+                lg:hidden flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px]
                 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600
                 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors
               "
             >
-              <Menu size={20} className="text-gray-600 dark:text-gray-300" />
+              <Menu size={22} className="text-gray-600 dark:text-gray-300" />
             </button>
           )}
 
@@ -96,7 +96,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 onKeyDown={handleKeyDown}
                 placeholder={placeholder}
                 className="
-                  w-full pl-12 pr-12 py-3 bg-transparent border-none outline-none
+                  w-full pl-12 pr-12 py-3 sm:py-3.5 bg-transparent border-none outline-none min-h-[44px]
                   text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 text-sm 
                   focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-all duration-200
                 "
@@ -107,12 +107,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 <button
                   onClick={handleClear}
                   className="
-                    absolute right-4 flex items-center justify-center w-6 h-6
+                    absolute right-4 flex items-center justify-center w-7 h-7
                     rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors
                     text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300
                   "
                 >
-                  <X size={16} />
+                  <X size={18} />
                 </button>
               )}
             </div>
@@ -137,13 +137,13 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             <button
               onClick={onAddNote}
               className="
-                flex items-center justify-center gap-2 px-4 py-2 h-10
+                flex items-center justify-center gap-2 px-4 py-2 h-11 min-h-[44px]
                 bg-emerald-600 dark:bg-emerald-600 hover:bg-emerald-700 dark:hover:bg-emerald-700
                 text-white rounded-lg transition-colors font-medium text-sm
               "
               title="Adicionar nova nota"
             >
-              <Plus size={18} />
+              <Plus size={20} />
               <span className="hidden sm:inline">Nova Nota</span>
             </button>
           </div>

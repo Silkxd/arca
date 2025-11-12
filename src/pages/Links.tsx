@@ -157,7 +157,7 @@ export const Links: React.FC = () => {
   const stats = getGroupStats();
 
   return (
-    <div className="px-4 py-6 max-w-[95%] mx-auto xl:px-6">
+    <div className="px-4 py-6 max-w-[95%] mx-auto xl:px-6 scroll-smooth touch-manipulation">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
@@ -171,14 +171,14 @@ export const Links: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={handleAddGroup}
-            className="flex items-center gap-2 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 sm:py-3 sm:h-12 min-h-[44px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
           >
             <Folder className="w-5 h-5" />
             Novo Grupo
           </button>
           <button
             onClick={() => handleAddLink()}
-            className="flex items-center gap-2 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-colors"
+            className="flex items-center gap-2 px-4 py-2 sm:py-3 sm:h-12 min-h-[44px] bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-colors"
           >
             <Plus className="w-5 h-5" />
             Novo Link
@@ -188,7 +188,7 @@ export const Links: React.FC = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-3 sm:p-4 lg:p-6 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-xl">
               <Folder className="w-5 h-5 text-blue-600" />
@@ -202,7 +202,7 @@ export const Links: React.FC = () => {
           </p>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-3 sm:p-4 lg:p-6 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 bg-green-100 dark:bg-green-900/20 rounded-xl">
               <LinkIcon className="w-5 h-5 text-green-600" />
@@ -216,7 +216,7 @@ export const Links: React.FC = () => {
           </p>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-3 sm:p-4 lg:p-6 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 bg-purple-100 dark:bg-purple-900/20 rounded-xl">
               <Filter className="w-5 h-5 text-purple-600" />
@@ -240,7 +240,7 @@ export const Links: React.FC = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Buscar grupos ou links..."
-            className="w-full pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+            className="w-full pl-12 pr-4 py-3 sm:h-12 min-h-[44px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
           />
         </div>
       </div>
@@ -257,7 +257,7 @@ export const Links: React.FC = () => {
 
       {/* Loading State */}
       {loading && linkGroups.length === 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
             <LoadingCard key={i} />
           ))}
@@ -288,7 +288,7 @@ export const Links: React.FC = () => {
 
       {/* Groups Grid */}
       {filteredGroups.length > 0 && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredGroups.map(group => (
             <LinkGroupCard
               key={group.id}

@@ -60,13 +60,13 @@ export const FinanceCharts: React.FC<FinanceChartsProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
       {/* Balance Overview */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 arca-card-elevated">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 lg:p-6 border border-gray-200 dark:border-gray-700 arca-card-elevated">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           Visão Geral do Mês
         </h3>
-        <div className="h-64">
+        <div className="h-56 sm:h-64">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
@@ -99,11 +99,11 @@ export const FinanceCharts: React.FC<FinanceChartsProps> = ({
       </div>
 
       {/* Category Breakdown */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 arca-card-elevated">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 lg:p-6 border border-gray-200 dark:border-gray-700 arca-card-elevated">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           Gastos por Categoria
         </h3>
-        <div className="h-64">
+        <div className="h-56 sm:h-64">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={categoryStats.slice(0, 6)} layout="horizontal">
               <CartesianGrid strokeDasharray="3 3" />
@@ -118,11 +118,11 @@ export const FinanceCharts: React.FC<FinanceChartsProps> = ({
 
       {/* Monthly Trend (if data available) */}
       {monthlyTrend.length > 0 && (
-        <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 arca-card-elevated">
+        <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl p-4 lg:p-6 border border-gray-200 dark:border-gray-700 arca-card-elevated">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
             Tendência dos Últimos Meses
           </h3>
-          <div className="h-80">
+          <div className="h-64 sm:h-72 lg:h-80">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={monthlyTrend}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -157,7 +157,7 @@ export const FinanceCharts: React.FC<FinanceChartsProps> = ({
       )}
 
       {/* Category Stats List */}
-      <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+      <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl p-4 lg:p-6 border border-gray-200 dark:border-gray-700">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           Detalhes por Categoria
         </h3>

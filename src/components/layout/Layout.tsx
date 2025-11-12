@@ -13,7 +13,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   
   return (
     <div className="min-h-screen bg-background">
-      <main className="pb-20">
+      <main
+        className="pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-20"
+      >
         {children}
       </main>
       {isFocoPage ? <FocoNavigation /> : <CompactNavigation />}

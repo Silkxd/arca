@@ -326,7 +326,7 @@ export const MonthlyPlanningPJ: React.FC = () => {
 
       {/* Tabela de Planejamento */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700">
           <table className="w-full">
             <thead className="bg-blue-50 dark:bg-blue-900/20">
               <tr>
