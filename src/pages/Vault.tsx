@@ -83,7 +83,7 @@ export const Vault: React.FC = () => {
       />
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4 md:p-6">
+        <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-2 md:p-3">
           <SearchBar
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
@@ -96,7 +96,7 @@ export const Vault: React.FC = () => {
           />
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 md:p-6">
+        <div className="flex-1 overflow-y-auto p-2 md:p-3">
           {error && (
             <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-6">
               <p className="text-red-600 dark:text-red-400">{error}</p>

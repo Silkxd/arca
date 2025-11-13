@@ -20,9 +20,9 @@ export const VaultGrid: React.FC<VaultGridProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3">
         {Array.from({ length: 8 }).map((_, index) => (
-          <div key={index} className="bg-gray-100 dark:bg-gray-700 rounded-xl h-32 animate-pulse" />
+          <div key={index} className="bg-gray-100 dark:bg-gray-700 rounded-xl h-28 animate-pulse" />
         ))}
       </div>
     )
@@ -63,17 +63,17 @@ export const VaultGrid: React.FC<VaultGridProps> = ({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+        <div className="flex items-center space-x-3">
+          <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100">
             {selectedSegmentName || 'Todos os itens'}
           </h2>
-          <span className="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 rounded-full text-sm font-medium">
+          <span className="px-2 py-0.5 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 rounded-full text-xs font-medium">
             {items.length} {items.length === 1 ? 'item' : 'itens'}
           </span>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3">
         {items.map((item) => (
           <VaultItemCard key={item.id} item={item} onDelete={onDeleteItem} />
         ))}

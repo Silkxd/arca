@@ -10,6 +10,7 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation()
   const isFocoPage = location.pathname === '/foco'
+  const isDashboardPage = location.pathname === '/dashboard'
   
   return (
     <div className="min-h-screen bg-background">
@@ -18,7 +19,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       >
         {children}
       </main>
-      {isFocoPage ? <FocoNavigation /> : <CompactNavigation />}
+      {isFocoPage ? <FocoNavigation /> : (isDashboardPage ? null : <CompactNavigation />)}
     </div>
   )
 }

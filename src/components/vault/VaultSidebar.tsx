@@ -22,7 +22,7 @@ export const VaultSidebar: React.FC<VaultSidebarProps> = ({
   const { items } = useVaultStore()
   const categories = Array.from(new Set((items || []).map(i => i.category).filter(Boolean))) as string[]
 
-  const sidebarClasses = `fixed lg:relative top-0 left-0 h-full bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 ease-in-out z-40 ${isCollapsed ? 'w-16' : 'w-72'} ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`
+  const sidebarClasses = `fixed lg:relative top-0 left-0 h-full bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 ease-in-out z-40 ${isCollapsed ? 'w-14' : 'w-60'} ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`
   const overlayClasses = `fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden ${isMobileOpen ? 'block' : 'hidden'}`
 
   const itemBase = 'w-full flex items-center px-4 py-3 text-left transition-colors'
@@ -34,9 +34,9 @@ export const VaultSidebar: React.FC<VaultSidebarProps> = ({
       <div className={overlayClasses} onClick={onMobileToggle} />
 
       <div className={sidebarClasses}>
-        <div className="flex items-center justify-between p-4 pt-[calc(1rem+env(safe-area-inset-top))] border-b border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between p-3 pt-[calc(0.75rem+env(safe-area-inset-top))] border-b border-gray-200 dark:border-gray-700">
           {!isCollapsed && (
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Cofre</h2>
+            <h2 className="text-sm font-semibold text-gray-900 dark:text-gray-100">Cofre</h2>
           )}
           <button
             onClick={onMobileToggle}
@@ -58,7 +58,7 @@ export const VaultSidebar: React.FC<VaultSidebarProps> = ({
             className={`${itemBase} ${selectedSegment === 'all' ? itemActive : itemInactive}`}
           >
             <Shield size={20} className="flex-shrink-0" />
-            {!isCollapsed && <span className="ml-3 font-medium">Todos os itens</span>}
+            {!isCollapsed && <span className="ml-3 font-medium text-sm">Todos os itens</span>}
           </button>
 
           <button
@@ -66,7 +66,7 @@ export const VaultSidebar: React.FC<VaultSidebarProps> = ({
             className={`${itemBase} ${selectedSegment === 'document' ? itemActive : itemInactive}`}
           >
             <FileText size={20} className="flex-shrink-0" />
-            {!isCollapsed && <span className="ml-3 font-medium">Documentos</span>}
+            {!isCollapsed && <span className="ml-3 font-medium text-sm">Documentos</span>}
           </button>
 
           <button
@@ -74,14 +74,14 @@ export const VaultSidebar: React.FC<VaultSidebarProps> = ({
             className={`${itemBase} ${selectedSegment === 'text' ? itemActive : itemInactive}`}
           >
             <FileText size={20} className="flex-shrink-0" />
-            {!isCollapsed && <span className="ml-3 font-medium">Textos</span>}
+            {!isCollapsed && <span className="ml-3 font-medium text-sm">Textos</span>}
           </button>
 
           {!isCollapsed && <div className="mx-4 my-4 border-t border-gray-200 dark:border-gray-700" />}
 
           {!isCollapsed && (
             <div className="px-4 mb-2">
-              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide">Categorias</h3>
+              <h3 className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide">Categorias</h3>
             </div>
           )}
 
@@ -93,7 +93,7 @@ export const VaultSidebar: React.FC<VaultSidebarProps> = ({
               title={category}
             >
               <Folder size={20} className="flex-shrink-0" />
-              {!isCollapsed && <span className="ml-3 font-medium truncate">{category}</span>}
+              {!isCollapsed && <span className="ml-3 font-medium text-sm truncate">{category}</span>}
             </button>
           ))}
 

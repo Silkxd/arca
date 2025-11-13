@@ -11,6 +11,8 @@ export interface Note {
   created_at: string;
   updated_at: string;
   note_groups?: NoteGroup;
+  table_data?: string[][];
+  table_columns?: string[];
 }
 
 export interface NoteGroup {
@@ -27,6 +29,8 @@ export interface NoteFormData {
   content: string;
   is_important?: boolean;
   group_id: string;
+  table_data?: string[][];
+  table_columns?: string[];
 }
 
 export interface NoteGroupFormData {
@@ -42,12 +46,15 @@ interface NotesStore {
   error: string | null;
   selectedGroup: string;
   showImportantOnly: boolean;
+  tablesSupported: boolean;
+  noteTables: Record<string, { columns: string[]; data: string[][] }>;
 
   // Actions
   setSelectedGroup: (groupId: string) => void;
   setShowImportantOnly: (show: boolean) => void;
   fetchNoteGroups: () => Promise<void>;
   fetchNotes: () => Promise<void>;
+  fetchNoteTable: (noteId: string) => Promise<void>;
   addNoteGroup: (data: NoteGroupFormData) => Promise<void>;
   updateNoteGroup: (id: string, data: NoteGroupFormData) => Promise<void>;
   deleteNoteGroup: (id: string) => Promise<void>;
@@ -68,6 +75,8 @@ export const useNotesStore = create<NotesStore>((set, get) => ({
   error: null,
   selectedGroup: '',
   showImportantOnly: false,
+  tablesSupported: true,
+  noteTables: {},
 
   // Actions
   setSelectedGroup: (groupId: string) => {
@@ -138,6 +147,17 @@ export const useNotesStore = create<NotesStore>((set, get) => ({
       if (error) throw error;
 
       set({ notes: data || [] });
+
+      // Detect table support using dedicated tables to avoid 400 on missing columns
+      try {
+        const { error: tblError } = await supabase
+          .from('note_tables')
+          .select('id')
+          .limit(1);
+        set({ tablesSupported: !tblError });
+      } catch {
+        set({ tablesSupported: false });
+      }
     } catch (error) {
       console.error('Error fetching notes:', error);
       
@@ -158,6 +178,34 @@ export const useNotesStore = create<NotesStore>((set, get) => ({
     } finally {
       set({ loading: false });
     }
+  },
+
+  fetchNoteTable: async (noteId: string) => {
+    try {
+      const { data: tbl, error: tblErr } = await supabase
+        .from('note_tables')
+        .select('id, columns')
+        .eq('note_id', noteId)
+        .single();
+      if (tblErr || !tbl) return;
+      const tableId = tbl.id as string;
+      const columns = Array.isArray(tbl.columns) ? tbl.columns as string[] : [];
+      const { data: cells } = await supabase
+        .from('note_table_cells')
+        .select('row_index, col_index, value')
+        .eq('table_id', tableId)
+        .order('row_index', { ascending: true })
+        .order('col_index', { ascending: true });
+      const rowCount = Math.max(0, ...((cells || []).map(c => (c.row_index as number)))) + 1;
+      const colCount = Math.max(columns.length, ...((cells || []).map(c => (c.col_index as number) + 1)));
+      const dataMatrix: string[][] = Array.from({ length: rowCount }, () => Array(colCount).fill(''));
+      (cells || []).forEach(c => {
+        const r = c.row_index as number;
+        const col = c.col_index as number;
+        dataMatrix[r][col] = (c.value as string) || '';
+      });
+      set(state => ({ noteTables: { ...state.noteTables, [noteId]: { columns, data: dataMatrix } } }));
+    } catch {}
   },
 
   addNoteGroup: async (data: NoteGroupFormData) => {
@@ -248,12 +296,18 @@ export const useNotesStore = create<NotesStore>((set, get) => ({
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Usuário não autenticado');
 
+      const payload: any = {
+        title: data.title,
+        content: data.content,
+        is_important: !!data.is_important,
+        group_id: data.group_id,
+        user_id: user.id,
+      };
+      
+
       const { data: newNote, error } = await supabase
         .from('notes')
-        .insert([{
-          ...data,
-          user_id: user.id
-        }])
+        .insert([payload])
         .select(`
           *,
           note_groups (
@@ -268,6 +322,29 @@ export const useNotesStore = create<NotesStore>((set, get) => ({
       set(state => ({
         notes: [newNote, ...state.notes]
       }));
+
+      if (get().tablesSupported && Array.isArray(data.table_data) && data.table_data.length) {
+        const { data: upserted } = await supabase
+          .from('note_tables')
+          .upsert({ note_id: newNote.id, columns: data.table_columns || [] }, { onConflict: 'note_id' })
+          .select('id')
+          .single();
+        if (upserted) {
+          await supabase
+            .from('note_table_cells')
+            .delete()
+            .eq('table_id', upserted.id);
+          const rowsToInsert: any[] = [];
+          data.table_data.forEach((row, rIdx) => {
+            row.forEach((val, cIdx) => {
+              rowsToInsert.push({ table_id: upserted.id, row_index: rIdx, col_index: cIdx, value: val });
+            });
+          });
+          if (rowsToInsert.length) {
+            await supabase.from('note_table_cells').insert(rowsToInsert);
+          }
+        }
+      }
     } catch (error) {
       console.error('Error adding note:', error);
       set({ error: 'Erro ao adicionar nota' });
@@ -281,9 +358,17 @@ export const useNotesStore = create<NotesStore>((set, get) => ({
     try {
       set({ loading: true, error: null });
 
+      const payload: any = {
+        title: data.title,
+        content: data.content,
+        is_important: !!data.is_important,
+        group_id: data.group_id,
+      };
+      
+
       const { data: updatedNote, error } = await supabase
         .from('notes')
-        .update(data)
+        .update(payload)
         .eq('id', id)
         .select(`
           *,
@@ -297,10 +382,33 @@ export const useNotesStore = create<NotesStore>((set, get) => ({
       if (error) throw error;
 
       set(state => ({
-        notes: state.notes.map(note =>
+        notes: state.notes.map(note => 
           note.id === id ? updatedNote : note
         )
       }));
+
+      if (get().tablesSupported && Array.isArray(data.table_data)) {
+        const { data: tblRow, error: tblErr } = await supabase
+          .from('note_tables')
+          .upsert({ note_id: id, columns: data.table_columns || [] }, { onConflict: 'note_id' })
+          .select('id')
+          .single();
+        if (!tblErr && tblRow) {
+          await supabase
+            .from('note_table_cells')
+            .delete()
+            .eq('table_id', tblRow.id);
+          const rowsToInsert: any[] = [];
+          data.table_data.forEach((row, rIdx) => {
+            row.forEach((val, cIdx) => {
+              rowsToInsert.push({ table_id: tblRow.id, row_index: rIdx, col_index: cIdx, value: val });
+            });
+          });
+          if (rowsToInsert.length) {
+            await supabase.from('note_table_cells').insert(rowsToInsert);
+          }
+        }
+      }
     } catch (error) {
       console.error('Error updating note:', error);
       set({ error: 'Erro ao atualizar nota' });
